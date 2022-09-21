@@ -11,7 +11,12 @@ class Home extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AutoTabsScaffold(
-      routes: const [Login(), Signup(), Welcome()],
+      routes: const [
+        Login(),
+        Signup(),
+        Surveys(),
+        Settings(),
+      ],
       builder: (context, child, animation) => ScaleTransition(
         scale: animation,
         child: child,
@@ -28,25 +33,33 @@ class Home extends ConsumerWidget {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
-                EvaIcons.homeOutline,
-                size: 22,
+                Icons.dashboard,
+                size: 18,
               ),
               label: "Home",
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                EvaIcons.pin,
-                size: 22,
+                EvaIcons.barChart,
+                size: 18,
               ),
               label: "Surveys",
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                EvaIcons.settingsOutline,
-                size: 22,
+                Icons.newspaper,
+                size: 18,
               ),
               backgroundColor: Palette.dark,
-              label: "Setings",
+              label: "Historique",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                EvaIcons.settings,
+                size: 18,
+              ),
+              backgroundColor: Palette.dark,
+              label: "Settings",
             ),
           ],
         );
