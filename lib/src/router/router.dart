@@ -1,5 +1,6 @@
 import 'package:cashcollect/src/screens/auth/login.dart';
 import 'package:cashcollect/src/screens/auth/signup.dart';
+import 'package:cashcollect/src/screens/home.dart';
 import 'package:cashcollect/src/screens/welcome.dart';
 import 'package:cashcollect/src/widgets/errors/navigation_error.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +26,12 @@ final router = GoRouter(
       path: '/signup',
       builder: (context, state) {
         return const Signup();
+      },
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) {
+        return const Home();
       },
     ),
   ],
