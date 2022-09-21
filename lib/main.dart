@@ -22,6 +22,7 @@ class CashCollect extends ConsumerWidget {
       restorationScopeId: 'cashcollect',
       title: 'CashCollect',
       routeInformationParser: _appRouter.defaultRouteParser(),
+      routerDelegate: _appRouter.delegate(),
       color: Palette.primary,
       theme: ThemeData(
         primaryColor: Palette.primary,
