@@ -24,30 +24,31 @@ class CashCollect extends ConsumerWidget {
       routerConfig: router,
       color: Palette.primary,
       theme: ThemeData(
-          primaryColor: Palette.primary,
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: MaterialColor(
-              Palette.primary.value,
-              const <int, Color>{
-                50: Palette.primary,
-                100: Palette.primary,
-                200: Palette.primary,
-                300: Palette.primary,
-                400: Palette.primary,
-                500: Palette.primary,
-                600: Palette.primary,
-                700: Palette.primary,
-                800: Palette.primary,
-                900: Palette.primary,
-              },
-            ),
-          ).copyWith(
-            secondary: Palette.secondary,
+        primaryColor: Palette.primary,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: MaterialColor(
+            Palette.primary.value,
+            const <int, Color>{
+              50: Palette.primary,
+              100: Palette.primary,
+              200: Palette.primary,
+              300: Palette.primary,
+              400: Palette.primary,
+              500: Palette.primary,
+              600: Palette.primary,
+              700: Palette.primary,
+              800: Palette.primary,
+              900: Palette.primary,
+            },
           ),
-          scaffoldBackgroundColor: Palette.lightGrey,
-          textTheme: GoogleFonts.poppinsTextTheme(
-            Theme.of(context).textTheme,
-          )),
+        ).copyWith(
+          secondary: Palette.secondary,
+        ),
+        scaffoldBackgroundColor: Palette.lightGrey,
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
     );
   }
 }
