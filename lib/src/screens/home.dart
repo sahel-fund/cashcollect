@@ -12,9 +12,9 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AutoTabsScaffold(
       routes: const [
-        Login(),
-        Signup(),
+        Intro(),
         Surveys(),
+        History(),
         Settings(),
       ],
       builder: (context, child, animation) => ScaleTransition(
