@@ -1,8 +1,8 @@
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/extensions/autorouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class Welcome extends ConsumerWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class Welcome extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextButton(
-            onPressed: () => context.go('/login'),
+            onPressed: () => context.autorouter.pushNamed('/login'),
             child: Text(
               'Login',
               style: TextStyles.designText(
@@ -25,7 +25,7 @@ class Welcome extends ConsumerWidget {
             ),
           ),
           TextButton(
-            onPressed: () => context.go('/signup'),
+            onPressed: () => context.autorouter.pushNamed('/signup'),
             child: Text(
               'Signup',
               style: TextStyles.designText(
@@ -36,7 +36,7 @@ class Welcome extends ConsumerWidget {
             ),
           ),
           TextButton(
-            onPressed: () => context.go('/home'),
+            onPressed: () => context.autorouter.pushNamed('/home'),
             child: Text(
               'Home',
               style: TextStyles.designText(
