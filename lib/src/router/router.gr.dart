@@ -12,11 +12,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:cashcollect/src/screens/auth/login.dart' as _i3;
-import 'package:cashcollect/src/screens/auth/signup.dart' as _i4;
+import 'package:cashcollect/src/screens/history.dart' as _i5;
 import 'package:cashcollect/src/screens/home.dart' as _i2;
+import 'package:cashcollect/src/screens/intro.dart' as _i3;
 import 'package:cashcollect/src/screens/settings.dart' as _i6;
-import 'package:cashcollect/src/screens/survey/surveys.dart' as _i5;
+import 'package:cashcollect/src/screens/survey/surveys.dart' as _i4;
 import 'package:cashcollect/src/screens/welcome.dart' as _i1;
 import 'package:flutter/material.dart' as _i8;
 
@@ -38,22 +38,22 @@ class AppRouter extends _i7.RootStackRouter {
         child: const _i2.Home(),
       );
     },
-    Login.name: (routeData) {
+    Intro.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i3.Login(),
-      );
-    },
-    Signup.name: (routeData) {
-      return _i7.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.Signup(),
+        child: const _i3.Intro(),
       );
     },
     Surveys.name: (routeData) {
       return _i7.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i5.Surveys(),
+        child: const _i4.Surveys(),
+      );
+    },
+    History.name: (routeData) {
+      return _i7.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.History(),
       );
     },
     Settings.name: (routeData) {
@@ -75,18 +75,18 @@ class AppRouter extends _i7.RootStackRouter {
           path: '/home',
           children: [
             _i7.RouteConfig(
-              Login.name,
-              path: 'login',
-              parent: Home.name,
-            ),
-            _i7.RouteConfig(
-              Signup.name,
-              path: 'signup',
+              Intro.name,
+              path: 'intro',
               parent: Home.name,
             ),
             _i7.RouteConfig(
               Surveys.name,
               path: 'surveys',
+              parent: Home.name,
+            ),
+            _i7.RouteConfig(
+              History.name,
+              path: 'history',
               parent: Home.name,
             ),
             _i7.RouteConfig(
@@ -125,31 +125,19 @@ class Home extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.Login]
-class Login extends _i7.PageRouteInfo<void> {
-  const Login()
+/// [_i3.Intro]
+class Intro extends _i7.PageRouteInfo<void> {
+  const Intro()
       : super(
-          Login.name,
-          path: 'login',
+          Intro.name,
+          path: 'intro',
         );
 
-  static const String name = 'Login';
+  static const String name = 'Intro';
 }
 
 /// generated route for
-/// [_i4.Signup]
-class Signup extends _i7.PageRouteInfo<void> {
-  const Signup()
-      : super(
-          Signup.name,
-          path: 'signup',
-        );
-
-  static const String name = 'Signup';
-}
-
-/// generated route for
-/// [_i5.Surveys]
+/// [_i4.Surveys]
 class Surveys extends _i7.PageRouteInfo<void> {
   const Surveys()
       : super(
@@ -158,6 +146,18 @@ class Surveys extends _i7.PageRouteInfo<void> {
         );
 
   static const String name = 'Surveys';
+}
+
+/// generated route for
+/// [_i5.History]
+class History extends _i7.PageRouteInfo<void> {
+  const History()
+      : super(
+          History.name,
+          path: 'history',
+        );
+
+  static const String name = 'History';
 }
 
 /// generated route for
