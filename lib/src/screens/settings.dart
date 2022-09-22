@@ -1,6 +1,7 @@
 import 'package:cashcollect/i18n/translations.gen.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/widgets/mark.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class Settings extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 34),
             Text(
               'Settings',
               style: TextStyles.designText(
@@ -67,7 +68,7 @@ class Settings extends ConsumerWidget {
               leading: const Icon(
                 EvaIcons.globe,
                 color: Palette.primary,
-                size: 32,
+                size: 22,
               ),
               subtitle: Text("Change language",
                   style: TextStyles.designText(
@@ -77,17 +78,44 @@ class Settings extends ConsumerWidget {
                       bold: false, color: Palette.primary, size: 16)),
             ),
             ListTile(
+              style: ListTileStyle.drawer,
+              dense: false,
+              trailing: ValueListenableBuilder(
+                valueListenable: Hive.box('settings').listenable(),
+                builder: (BuildContext context, Box box, Widget? widget) {
+                  return CupertinoSwitch(
+                    activeColor: Palette.primary,
+                    value: box.get('notifications') ?? true,
+                    onChanged: (value) {
+                      box.put('notifications', value);
+                    },
+                  );
+                },
+              ),
+              leading: const Icon(
+                EvaIcons.bell,
+                color: Palette.primary,
+                size: 22,
+              ),
+              subtitle: Text("Receive notifications",
+                  style: TextStyles.designText(
+                      bold: false, color: Palette.secondary, size: 11)),
+              title: Text("Notifications",
+                  style: TextStyles.designText(
+                      bold: false, color: Palette.primary, size: 16)),
+            ),
+            ListTile(
               leading: const Icon(
                 Icons.light_mode,
                 color: Palette.primary,
-                size: 32,
+                size: 22,
               ),
               trailing: ValueListenableBuilder(
                 valueListenable: Hive.box('settings').listenable(),
                 builder: (BuildContext context, Box box, Widget? widget) {
                   return CupertinoSwitch(
                     activeColor: Palette.primary,
-                    value: box.get('theme') ?? false,
+                    value: box.get('theme'),
                     onChanged: (value) {
                       box.put('theme', value);
                     },
@@ -101,6 +129,67 @@ class Settings extends ConsumerWidget {
                   style: TextStyles.designText(
                       bold: false, color: Palette.primary, size: 16)),
             ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Palette.primary, width: .85),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        trailing: const Icon(
+                          EvaIcons.arrowRight,
+                          color: Palette.primary,
+                          size: 22,
+                        ),
+                        title: Text("Rate us",
+                            style: TextStyles.designText(
+                                bold: false, color: Palette.primary, size: 16)),
+                      ),
+                      ListTile(
+                        trailing: const Icon(
+                          EvaIcons.arrowRight,
+                          color: Palette.primary,
+                          size: 22,
+                        ),
+                        title: Text("User terms & Cndiions",
+                            style: TextStyles.designText(
+                                bold: false, color: Palette.primary, size: 16)),
+                      ),
+                      ListTile(
+                        trailing: const Icon(
+                          EvaIcons.arrowRight,
+                          color: Palette.primary,
+                          size: 22,
+                        ),
+                        title: Text("Confidentiality",
+                            style: TextStyles.designText(
+                                bold: false, color: Palette.primary, size: 16)),
+                      ),
+                      ListTile(
+                        trailing: const Icon(
+                          EvaIcons.arrowRight,
+                          color: Palette.primary,
+                          size: 22,
+                        ),
+                        title: Text("About us",
+                            style: TextStyles.designText(
+                                bold: false, color: Palette.primary, size: 16)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 54,
+            ),
+            const TradeMark()
           ],
         ),
       ),
