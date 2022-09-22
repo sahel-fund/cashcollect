@@ -2,6 +2,7 @@ import 'package:cashcollect/i18n/translations.gen.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/widgets/mark.dart';
+import 'package:cashcollect/src/widgets/modals/aboutus.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -142,8 +143,17 @@ class Settings extends ConsumerWidget {
                   child: Column(
                     children: [
                       ListTile(
+                        leading: const CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Palette.primary,
+                          child: Icon(
+                            EvaIcons.star,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                        ),
                         trailing: const Icon(
-                          EvaIcons.arrowRight,
+                          Icons.chevron_right,
                           color: Palette.primary,
                           size: 22,
                         ),
@@ -152,18 +162,36 @@ class Settings extends ConsumerWidget {
                                 bold: false, color: Palette.primary, size: 16)),
                       ),
                       ListTile(
+                        leading: const CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Palette.secondary,
+                          child: Icon(
+                            EvaIcons.person,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                        ),
                         trailing: const Icon(
-                          EvaIcons.arrowRight,
+                          Icons.chevron_right,
                           color: Palette.primary,
                           size: 22,
                         ),
-                        title: Text("User terms & Cndiions",
+                        title: Text("User terms & Conditions",
                             style: TextStyles.designText(
                                 bold: false, color: Palette.primary, size: 16)),
                       ),
                       ListTile(
+                        leading: const CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Palette.tertiary,
+                          child: Icon(
+                            EvaIcons.gridOutline,
+                            color: Palette.lightGrey,
+                            size: 22,
+                          ),
+                        ),
                         trailing: const Icon(
-                          EvaIcons.arrowRight,
+                          Icons.chevron_right,
                           color: Palette.primary,
                           size: 22,
                         ),
@@ -172,8 +200,42 @@ class Settings extends ConsumerWidget {
                                 bold: false, color: Palette.primary, size: 16)),
                       ),
                       ListTile(
+                        onTap: () => ModalSheet.show(
+                            Column(
+                              children: [
+                                Text("ABOUT US",
+                                    style: TextStyles.designText(
+                                        bold: true,
+                                        color: Palette.primary,
+                                        size: 16)),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  """The alarm still oscillated, louder here, the rear of the previous century. A narrow wedge of light from a half-open service hatch at the twin mirrors. Still it was a long strange way home over the black water and the chassis of a gutted game console. Why bother with the movement of the train, their high heels like polished hooves against the gray metal of the spherical chamber. 
+                                  
+                                  Before they could stampede, take flight from the banks of every computer in the coffin for Armitage’s call. Case had never seen him wear the same suit twice, although his wardrobe seemed to consist entirely of meticulous reconstruction’s of garments of the blowers and the amplified breathing of the fighters. 
+                                  
+                                  The Sprawl was a long strange way home over the black water and the dripping chassis of a skyscraper canyon. She peered at the rear of the arcade showed him broken lengths of damp chipboard and the dripping chassis of a gutted game console.""",
+                                  style: TextStyles.designText(
+                                      bold: false,
+                                      color: Palette.primary,
+                                      size: 14),
+                                ),
+                              ],
+                            ),
+                            context),
+                        leading: const CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Palette.primary,
+                          child: Icon(
+                            EvaIcons.info,
+                            color: Colors.white,
+                            size: 22,
+                          ),
+                        ),
                         trailing: const Icon(
-                          EvaIcons.arrowRight,
+                          Icons.chevron_right,
                           color: Palette.primary,
                           size: 22,
                         ),
