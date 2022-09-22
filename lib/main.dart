@@ -16,6 +16,7 @@ Future<void> main() async {
       ? {
           Hive.box('settings').put('language', 'English'),
           Hive.box('settings').put('theme', false),
+          Hive.box('notifications').put('theme', true),
         }
       : null;
   runApp(
@@ -39,6 +40,15 @@ class CashCollect extends ConsumerWidget {
         routerDelegate: _appRouter.delegate(),
         color: Palette.primary,
         themeMode: box.get('theme') ? ThemeMode.dark : ThemeMode.light,
+        darkTheme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Palette.backgroundDark,
+          textTheme: GoogleFonts.poppinsTextTheme(
+            Theme.of(context).textTheme.apply(
+                  bodyColor: Colors.white,
+                  displayColor: Colors.white,
+                ),
+          ),
+        ),
         theme: ThemeData(
           primaryColor: Palette.primary,
           colorScheme: ColorScheme.fromSwatch(
