@@ -7,7 +7,7 @@ class Palette {
   static const Color quaternary = Color(0xFFFFA68B);
   static const Color quinary = Color(0xFFFFCC70);
   static const Color senary = Color(0xFFF9F871);
-
+  static const Color backgroundDark = Color(0xFF16213E);
   // GENERIC PALETTE
   static const Color dark = Color(0xFF000000);
   static const Color light = Color(0xFFFFFFFF);
