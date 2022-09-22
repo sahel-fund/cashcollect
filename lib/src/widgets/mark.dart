@@ -10,6 +10,7 @@ class TradeMark extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,7 +26,7 @@ class TradeMark extends StatelessWidget {
               ),
               Text(
                 'Collect',
-                style: GoogleFonts.aclonica(
+                style: GoogleFonts.besley(
                   color: Palette.tertiary,
                   fontSize: 18,
                 ),
