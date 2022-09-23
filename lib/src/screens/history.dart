@@ -133,10 +133,22 @@ class HistoryTile extends StatelessWidget {
                         )
                       ],
                     ),
-                    Text(
-                      "${history.amount}",
-                      style: TextStyles.designText(
-                          color: Palette.darkGrey, size: 18, bold: true),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Builder(builder: (context) {
+                        String pretext =
+                            history.nature.toLowerCase() == 'withdraw'
+                                ? '+'
+                                : '-';
+                        Color color = history.nature.toLowerCase() == 'withdraw'
+                            ? Palette.success
+                            : Palette.danger.withOpacity(.8);
+                        return Text(
+                          " $pretext${history.amount.toInt()}",
+                          style: TextStyles.designText(
+                              color: color, size: 14, bold: true),
+                        );
+                      }),
                     )
                   ],
                 ),
