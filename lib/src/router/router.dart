@@ -12,6 +12,8 @@ import 'package:cashcollect/src/screens/welcome.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(page: Welcome, path: '/', initial: true),
+    AutoRoute(page: Login, path: '/login', initial: false),
+    AutoRoute(page: Signup, path: '/signup', initial: false),
     AutoRoute(page: Home, path: '/home', children: [
       AutoRoute(page: Intro, path: 'intro'),
       AutoRoute(page: Surveys, path: 'surveys'),
