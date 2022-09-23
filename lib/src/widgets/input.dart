@@ -1,0 +1,85 @@
+import 'package:cashcollect/src/config/palette.dart';
+import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final isPasswordVisibleRiverpod =
+    StateProvider.autoDispose<bool>((ref) => false);
+
+class Input extends ConsumerWidget {
+  final TextEditingController controller;
+  final TextInputType? type;
+  final String label;
+  final IconData icon;
+  final bool isPassword;
+  final String hint;
+  final String? Function(String?)? validator;
+  const Input(
+      {Key? key,
+      this.type,
+      required this.controller,
+      required this.label,
+      required this.icon,
+      required this.isPassword,
+      required this.hint,
+      required this.validator})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isPasswordVisible = ref.watch(isPasswordVisibleRiverpod);
+    return Column(children: [
+      Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              label,
+              style: TextStyles.designText(
+                  bold: false, color: Palette.primary, size: 18),
+            ),
+          ),
+        ],
+      ),
+      // const SizedBox(height: 4),
+      Container(
+        height: 58.0,
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        decoration: BoxDecoration(
+          color: Palette.grey,
+          borderRadius: BorderRadius.circular(32.0),
+        ),
+        child: Center(
+          child: TextFormField(
+            keyboardType: type,
+            validator: validator,
+            controller: controller,
+            obscureText: isPassword && isPasswordVisible ? true : false,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: Icon(
+                icon,
+                color: Palette.primary,
+              ),
+              suffixIcon: isPassword
+                  ? InkWell(
+                      onTap: () {
+                        ref.read(isPasswordVisibleRiverpod.notifier).state =
+                            !ref.read(isPasswordVisibleRiverpod.notifier).state;
+                      },
+                      child: isPasswordVisible
+                          ? const Icon(EvaIcons.eye)
+                          : const Icon(EvaIcons.eyeOff),
+                    )
+                  : null,
+              hintText: hint,
+              hintStyle: TextStyles.designText(
+                  bold: false, color: Palette.darkGrey, size: 12),
+            ),
+          ),
+        ),
+      )
+    ]);
+  }
+}
