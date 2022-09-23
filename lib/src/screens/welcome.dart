@@ -12,19 +12,18 @@ class Welcome extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Stack(
+        clipBehavior: Clip.none,
+        fit: StackFit.expand,
         children: [
-          SvgPicture.asset(
-            'assets/svg/intro-ilustration.svg',
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height * 0.5,
-          ),
+          Image.asset('assets/images/welcome.png'),
           Container(
             height: double.infinity,
             width: double.infinity,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Palette.primary, Palette.secondary],
-              ),
+              color: Palette.primary,
+              // gradient: LinearGradient(
+              //   colors: [Palette.primary, Palette.secondary],
+              // ),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
