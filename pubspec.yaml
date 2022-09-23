@@ -45,6 +45,9 @@ dependencies:
   auto_route: ^5.0.1
   eva_icons_flutter: ^3.1.0
   hive_flutter: ^1.1.0
+  flutter_credit_card: ^3.0.4
+  awesome_card: ^1.1.7
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
