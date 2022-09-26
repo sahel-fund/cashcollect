@@ -1,4 +1,4 @@
-import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
+import 'package:argon_buttons_flutter_fix/argon_buttons_flutter.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,8 +22,9 @@ class Button extends StatelessWidget {
       borderRadius: 5.0,
       color: Palette.primary,
       loader: Container(
-          padding: const EdgeInsets.all(10),
-          child: const CupertinoActivityIndicator()),
+        padding: const EdgeInsets.all(10),
+        child: const CupertinoActivityIndicator(),
+      ),
       onTap: (startLoading, stopLoading, btnState) async {
         if (btnState == ButtonState.Idle) {
           startLoading();
