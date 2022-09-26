@@ -1,3 +1,4 @@
+import 'package:cashcollect/src/widgets/button.dart';
 import 'package:cashcollect/src/widgets/input.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,14 @@ class Signup extends ConsumerWidget {
               isPassword: false,
               controller: TextEditingController(),
             ),
+            const SizedBox(
+              height: 24,
+            ),
+            Button(
+              callback: () {},
+              isLoading: false,
+              label: "Continue",
+            )
           ],
         ),
       ),
