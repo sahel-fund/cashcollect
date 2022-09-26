@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconly/iconly.dart';
+import 'package:pinput/pinput.dart';
 
 class Signup extends ConsumerWidget {
   const Signup({Key? key}) : super(key: key);
@@ -83,6 +84,8 @@ class Signup extends ConsumerWidget {
                     showDialog(
                       context: context,
                       builder: (context) {
+                        TextEditingController otpController =
+                            TextEditingController();
                         return Material(
                           child: Container(
                             color: Palette.primary,
@@ -97,7 +100,7 @@ class Signup extends ConsumerWidget {
                                   Text("Phone OTP validation",
                                       style: TextStyles.designText(
                                           bold: true,
-                                          size: 22,
+                                          size: 28,
                                           color: Palette.lightGrey)),
                                   const SizedBox(
                                     height: 8,
@@ -109,7 +112,46 @@ class Signup extends ConsumerWidget {
                                       size: 14,
                                       color: Palette.lightGrey.withOpacity(0.5),
                                     ),
-                                  )
+                                  ),
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  Pinput(
+                                    length: 6,
+                                    controller: otpController,
+                                    keyboardType: TextInputType.number,
+                                    onClipboardFound: (data) {
+                                      otpController.value =
+                                          TextEditingValue(text: data);
+                                    },
+                                    androidSmsAutofillMethod:
+                                        AndroidSmsAutofillMethod
+                                            .smsRetrieverApi,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Didn't receive the code?",
+                                        style: TextStyles.designText(
+                                          bold: false,
+                                          size: 14,
+                                          color: Palette.lightGrey
+                                              .withOpacity(0.5),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          "Resend Code",
+                                          style: TextStyles.designText(
+                                            bold: false,
+                                            size: 14,
+                                            color: Palette.lightGrey,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
