@@ -47,7 +47,7 @@ class Input extends ConsumerWidget {
         height: 58.0,
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         decoration: BoxDecoration(
-          color: Palette.grey,
+          color: Palette.grey.withOpacity(.5),
           borderRadius: BorderRadius.circular(32.0),
         ),
         child: Center(
@@ -56,6 +56,8 @@ class Input extends ConsumerWidget {
             validator: validator,
             controller: controller,
             obscureText: isPassword && isPasswordVisible ? true : false,
+            style: TextStyles.designText(
+                bold: false, color: Palette.dark.withOpacity(.5), size: 18),
             decoration: InputDecoration(
               border: InputBorder.none,
               prefixIcon: Icon(
