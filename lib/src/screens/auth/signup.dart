@@ -146,6 +146,13 @@ class Signup extends ConsumerWidget {
                 Button(
                   callback: () {
                     if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      ref
+                          .read(AuthRiverpods.authenticationProvider)
+                          .verifyPhoneNumber(
+                            phoneNumber: "+237${phoneController.value.text}",
+                            //pin: pin,
+                          );
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -197,9 +204,8 @@ class Signup extends ConsumerWidget {
                                         ref
                                             .read(AuthRiverpods
                                                 .authenticationProvider)
-                                            .verifyPhoneNumber(
-                                              phoneNumber: phoneController.text,
-                                              pin: pin,
+                                            .signInWithPhoneNumber(
+                                              smsCode: pin,
                                             );
                                       },
                                     ),
