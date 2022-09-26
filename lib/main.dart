@@ -51,6 +51,10 @@ class CashCollect extends ConsumerWidget {
         ),
         theme: ThemeData(
           primaryColor: Palette.primary,
+
+            buttonTheme: const ButtonThemeData(
+            buttonColor: Palette.tertiary,
+          ),
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: MaterialColor(
               Palette.primary.value,
@@ -67,6 +71,7 @@ class CashCollect extends ConsumerWidget {
                 900: Palette.primary,
               },
             ),
+            
           ).copyWith(
             secondary: Palette.secondary,
           ),
