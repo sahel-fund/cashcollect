@@ -1,5 +1,7 @@
+import 'package:cashcollect/firebase_options.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/router/router.gr.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChrome, DeviceOrientation;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +11,11 @@ import 'package:hive_listener/hive_listener.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp(
+    name: 'cashcollect',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Hive.initFlutter();
   await Hive.openBox('settings');
