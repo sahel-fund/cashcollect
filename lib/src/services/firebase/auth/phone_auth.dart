@@ -11,7 +11,7 @@ class Authentication {
 
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
-    required String pin,
+    //required String pin,
   }) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
@@ -19,8 +19,12 @@ class Authentication {
         debugPrint('Verification completed: $creds');
       },
       timeout: const Duration(seconds: 60),
-      verificationFailed: (exception) {},
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      verificationFailed: (exception) {
+        debugPrint('Verification failed: $exception');
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _read(verificationID.state).state = verificationId;
+      },
       codeSent: (String verificationId, forceResendingToken) async {
         _read(verificationID.state).state = verificationId;
       },
