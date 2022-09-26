@@ -1,6 +1,9 @@
+import 'package:argon_buttons_flutter_fix/argon_buttons_flutter.dart';
+import 'package:cashcollect/src/config/palette.dart';
+import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/widgets/button.dart';
 import 'package:cashcollect/src/widgets/input.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconly/iconly.dart';
@@ -64,6 +67,30 @@ class Signup extends ConsumerWidget {
               callback: () {},
               isLoading: false,
               label: "Continue",
+            ),
+            Text("Hello world"),
+            ArgonButton(
+              height: 50,
+              width: 350,
+              borderRadius: 5.0,
+              color: Palette.primary,
+              loader: Container(
+                padding: const EdgeInsets.all(10),
+                child: const CupertinoActivityIndicator(),
+              ),
+              onTap: (startLoading, stopLoading, btnState) async {
+                if (btnState == ButtonState.Idle) {
+                  startLoading();
+                  // callback.call();
+                  //await doNetworkRequest();
+                  stopLoading();
+                }
+              },
+              child: Text(
+                "label",
+                style: TextStyles.designText(
+                    color: Palette.lightGrey, size: 18, bold: false),
+              ),
             )
           ],
         ),
