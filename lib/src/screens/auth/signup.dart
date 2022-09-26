@@ -1,9 +1,8 @@
-import 'package:cashcollect/src/config/palette.dart';
-import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/widgets/input.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconly/iconly.dart';
 
 class Signup extends ConsumerWidget {
   const Signup({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class Signup extends ConsumerWidget {
           children: [
             const SizedBox(height: 34),
             Input(
-              icon: EvaIcons.person,
+              icon: IconlyBroken.profile,
               label: 'Names',
               hint: 'Alpha Casher',
               validator: (value) {
@@ -27,7 +26,7 @@ class Signup extends ConsumerWidget {
               controller: TextEditingController(),
             ),
             Input(
-              icon: EvaIcons.person,
+              icon: IconlyBroken.message,
               label: 'Email',
               hint: 'alphacasher@cashcollect.com',
               validator: (value) {
@@ -37,7 +36,7 @@ class Signup extends ConsumerWidget {
               controller: TextEditingController(),
             ),
             Input(
-              icon: EvaIcons.person,
+              icon: IconlyBroken.calling,
               label: 'Phone number',
               type: TextInputType.number,
               hint: '+237 690535759',
@@ -48,7 +47,7 @@ class Signup extends ConsumerWidget {
               controller: TextEditingController(),
             ),
             Input(
-              icon: EvaIcons.person,
+              icon: IconlyBroken.location,
               label: 'Town',
               hint: 'Ngaoundere',
               validator: (value) {
