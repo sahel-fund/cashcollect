@@ -1,4 +1,3 @@
-import 'package:argon_buttons_flutter_fix/argon_buttons_flutter.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
@@ -9,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconly/iconly.dart';
 import 'package:pinput/pinput.dart';
+
+final townRiverpod = StateProvider<String>((ref) => 'Yaounde');
 
 class Signup extends ConsumerWidget {
   const Signup({Key? key}) : super(key: key);
@@ -44,7 +45,7 @@ class Signup extends ConsumerWidget {
                     label: 'Names',
                     hint: 'Alpha Casher',
                     validator: (value) {
-                      return null;
+                      return !(value!.length > 4) ? "enter a valid name" : null;
                     },
                     isPassword: false,
                     controller: nameController),
@@ -53,7 +54,9 @@ class Signup extends ConsumerWidget {
                     label: 'Email',
                     hint: 'alphacasher@cashcollect.com',
                     validator: (value) {
-                      return null;
+                      return !(value!.contains('@') && value.length > 10)
+                          ? "enter a valid email"
+                          : null;
                     },
                     isPassword: false,
                     controller: emailController),
@@ -63,7 +66,11 @@ class Signup extends ConsumerWidget {
                     type: TextInputType.number,
                     hint: '+237 690535759',
                     validator: (value) {
-                      return null;
+                      return !(value!.startsWith('6') ||
+                              value.startsWith('237') ||
+                              value.startsWith('+237') && value.length > 9)
+                          ? "enter a valid phone number"
+                          : null;
                     },
                     isPassword: false,
                     controller: phoneController),
@@ -76,6 +83,15 @@ class Signup extends ConsumerWidget {
                     },
                     isPassword: false,
                     controller: cityController),
+                DropdownButtonFormField(
+                  items: buildItems(),
+                  value: ref.watch(townRiverpod.state).state,
+                  onChanged: (value) {},
+                  elevation: 0,
+                  icon:
+                      const Icon(IconlyBroken.location, color: Palette.primary),
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
                 const SizedBox(
                   height: 24,
                 ),
@@ -183,4 +199,76 @@ class Signup extends ConsumerWidget {
       ),
     );
   }
+}
+
+List<DropdownMenuItem<String>> buildItems() {
+  // Towns in Cameroon
+  List<String> towns = [
+    "Yaounde",
+    "Douala",
+    "Bafoussam",
+    "Garoua",
+    "Bamenda",
+    "Maroua",
+    "Ngaoundere",
+    "Bertoua",
+    "Kribi",
+    "Ebolowa",
+    "Buea",
+    "Bafang",
+    "Kumba",
+    "Kumbo",
+    "Mbouda",
+    "Mbalmayo",
+    "Mokolo",
+    "Mora",
+    "Nkongsamba",
+    "Sangmelima",
+    "Tiko",
+    "Wum",
+    "Yagoua",
+    "Edea",
+    "Kaele",
+    "Kousseri",
+    "Nanga Eboko",
+    "Nkoteng",
+    "Bafia",
+    "Banyo",
+    "Bogo",
+    "Buea",
+    "Bafang",
+    "Bafoussam",
+    "Bafia",
+    "Bali",
+    "Bangangte",
+    "Bangem",
+    "Bangou",
+    "Bangoura",
+    "Bertoua",
+    "Buea",
+    "Garoua",
+    "Kumba",
+    "Maroua",
+    "Ngaoundere",
+    "Ebolowa",
+    "Kribi",
+    "Limbe",
+    "Mbalmayo",
+    "Mamfe",
+    "Mokolo",
+    "Mora",
+    "Mundemba",
+    "Nkongsamba",
+    "Nkoteng",
+  ];
+  return towns
+      .map(
+        (String city) => DropdownMenuItem(
+          value: city,
+          child: Text(city,
+              style: TextStyles.designText(
+                  color: Palette.darkGrey, size: 14, bold: false)),
+        ),
+      )
+      .toList();
 }
