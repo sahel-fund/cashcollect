@@ -1,4 +1,5 @@
 import 'package:argon_buttons_flutter_fix/argon_buttons_flutter.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/widgets/button.dart';
@@ -6,6 +7,7 @@ import 'package:cashcollect/src/widgets/input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconly/iconly.dart';
 
 class Signup extends ConsumerWidget {
@@ -13,64 +15,91 @@ class Signup extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final emailController = TextEditingController();
+    final cityController = TextEditingController();
+    final nameController = TextEditingController();
+    final phoneController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 34),
-            Input(
-              icon: IconlyBroken.profile,
-              label: 'Names',
-              hint: 'Alpha Casher',
-              validator: (value) {
-                return null;
-              },
-              isPassword: false,
-              controller: TextEditingController(),
-            ),
-            Input(
-              icon: IconlyBroken.message,
-              label: 'Email',
-              hint: 'alphacasher@cashcollect.com',
-              validator: (value) {
-                return null;
-              },
-              isPassword: false,
-              controller: TextEditingController(),
-            ),
-            Input(
-              icon: IconlyBroken.calling,
-              label: 'Phone number',
-              type: TextInputType.number,
-              hint: '+237 690535759',
-              validator: (value) {
-                return null;
-              },
-              isPassword: false,
-              controller: TextEditingController(),
-            ),
-            Input(
-              icon: IconlyBroken.location,
-              label: 'Town',
-              hint: 'Ngaoundere',
-              validator: (value) {
-                return null;
-              },
-              isPassword: false,
-              controller: TextEditingController(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Button(
-              callback: () {
-                print("hiiii");
-              },
-              isLoading: false,
-              label: "Continue",
-            ),
-          ],
+        child: Form(
+          key: formKey,
+          onWillPop: () async {
+            return true;
+          },
+          child: Column(
+            children: [
+              const SizedBox(height: 34),
+              SvgPicture.asset(
+                'assets/svg/intro.svg',
+                height: 180,
+                //width: MediaQuery.of(context).size.width * 0.5,
+              ),
+              const SizedBox(height: 14),
+              Input(
+                  icon: IconlyBroken.profile,
+                  label: 'Names',
+                  hint: 'Alpha Casher',
+                  validator: (value) {
+                    return null;
+                  },
+                  isPassword: false,
+                  controller: nameController),
+              Input(
+                  icon: IconlyBroken.message,
+                  label: 'Email',
+                  hint: 'alphacasher@cashcollect.com',
+                  validator: (value) {
+                    return null;
+                  },
+                  isPassword: false,
+                  controller: emailController),
+              Input(
+                  icon: IconlyBroken.calling,
+                  label: 'Phone number',
+                  type: TextInputType.number,
+                  hint: '+237 690535759',
+                  validator: (value) {
+                    return null;
+                  },
+                  isPassword: false,
+                  controller: phoneController),
+              Input(
+                  icon: IconlyBroken.location,
+                  label: 'Town',
+                  hint: 'Ngaoundere',
+                  validator: (value) {
+                    return null;
+                  },
+                  isPassword: false,
+                  controller: cityController),
+              const SizedBox(
+                height: 24,
+              ),
+              Button(
+                callback: () {
+                  // print("hiiii");
+                },
+                isLoading: false,
+                label: "Continue",
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextButton(
+                onPressed: () {
+                  context.router.pushNamed('/login');
+                },
+                child: Text(
+                  "Already have an account? Login",
+                  style: TextStyles.designText(
+                      color: Palette.darkGrey, size: 14, bold: false),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
