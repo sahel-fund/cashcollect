@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/widgets/button.dart';
 import 'package:cashcollect/src/widgets/input.dart';
 import 'package:flutter/material.dart';
@@ -143,6 +144,14 @@ class Signup extends ConsumerWidget {
                                     androidSmsAutofillMethod:
                                         AndroidSmsAutofillMethod
                                             .smsRetrieverApi,
+                                    onCompleted: (pin) {
+                                      ref
+                                          .read(AuthRiverpods
+                                              .authenticationProvider)
+                                          .verifyPhoneNumber(
+                                              phoneNumber: phoneController.text,
+                                              pin: pin);
+                                    },
                                   ),
                                   Row(
                                     children: [
