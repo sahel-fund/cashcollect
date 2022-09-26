@@ -1,5 +1,7 @@
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
+import 'package:cashcollect/src/screens/auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Authentication {
@@ -13,23 +15,21 @@ class Authentication {
   }) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential creds) {},
+      verificationCompleted: (PhoneAuthCredential creds) {
+        debugPrint('Verification completed: $creds');
+      },
       timeout: const Duration(seconds: 60),
       verificationFailed: (exception) {},
       codeAutoRetrievalTimeout: (String verificationId) {},
-      codeSent: (String verificationId, int? forceResendingToken) {
-        signInWithPhoneNumber(
-          verificationId: verificationId,
-          smsCode: pin,
-        );
+      codeSent: (String verificationId, forceResendingToken) async {
+        _read(verificationID.state).state = verificationId;
       },
     );
   }
 
-  Future<void> signInWithPhoneNumber(
-      {required String verificationId, required String smsCode}) async {
+  signInWithPhoneNumber({required String smsCode}) async {
     final AuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
+      verificationId: _read(verificationID.state).state,
       smsCode: smsCode,
     );
 
