@@ -9,20 +9,25 @@ class Authentication {
 
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
-    required Function(PhoneAuthCredential) verificationCompleted,
+    required String pin,
   }) async {
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: verificationCompleted,
+      verificationCompleted: (PhoneAuthCredential creds) {},
       timeout: const Duration(seconds: 60),
       verificationFailed: (exception) {},
       codeAutoRetrievalTimeout: (String verificationId) {},
-      codeSent: (String verificationId, int? forceResendingToken) {},
+      codeSent: (String verificationId, int? forceResendingToken) {
+        signInWithPhoneNumber(
+          verificationId: verificationId,
+          smsCode: pin,
+        );
+      },
     );
   }
 
   Future<void> signInWithPhoneNumber(
-      String verificationId, String smsCode) async {
+      {required String verificationId, required String smsCode}) async {
     final AuthCredential credential = PhoneAuthProvider.credential(
       verificationId: verificationId,
       smsCode: smsCode,
