@@ -64,34 +64,12 @@ class Signup extends ConsumerWidget {
               height: 24,
             ),
             Button(
-              callback: () {},
+              callback: () {
+                print("hiiii");
+              },
               isLoading: false,
               label: "Continue",
             ),
-            Text("Hello world"),
-            ArgonButton(
-              height: 50,
-              width: 350,
-              borderRadius: 5.0,
-              color: Palette.primary,
-              loader: Container(
-                padding: const EdgeInsets.all(10),
-                child: const CupertinoActivityIndicator(),
-              ),
-              onTap: (startLoading, stopLoading, btnState) async {
-                if (btnState == ButtonState.Idle) {
-                  startLoading();
-                  // callback.call();
-                  //await doNetworkRequest();
-                  stopLoading();
-                }
-              },
-              child: Text(
-                "label",
-                style: TextStyles.designText(
-                    color: Palette.lightGrey, size: 18, bold: false),
-              ),
-            )
           ],
         ),
       ),
