@@ -1,5 +1,7 @@
 import 'package:cashcollect/firebase_options.dart';
 import 'package:cashcollect/src/config/palette.dart';
+import 'package:cashcollect/src/router/guards/auth_guard.dart';
+import 'package:cashcollect/src/router/guards/auth_listener.dart';
 import 'package:cashcollect/src/router/router.gr.dart';
 import 'package:cashcollect/src/utils/adapters/user_adapter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,17 +32,36 @@ Future<void> main() async {
         }
       : null;
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: CashCollect(),
     ),
   );
 }
 
-class CashCollect extends ConsumerWidget {
-  CashCollect({Key? key}) : super(key: key);
-  final _appRouter = AppRouter();
+class CashCollect extends ConsumerStatefulWidget {
+  const CashCollect({
+    Key? key,
+  }) : super(key: key);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _CashCollectState();
+}
+
+class _CashCollectState extends ConsumerState<CashCollect> {
+  late AppRouter _appRouter;
+  @override
+  void initState() {
+    _appRouter = AppRouter(
+      authGuard: AuthGuard(
+        ref: ref,
+      ),
+      authListener: AuthListener(),
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return HiveListener(
       box: Hive.box('settings'),
       builder: (box) => MaterialApp.router(
