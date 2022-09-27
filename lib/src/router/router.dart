@@ -13,7 +13,14 @@ import 'package:cashcollect/src/screens/welcome.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: Welcome, path: '/', initial: true),
+    AutoRoute(
+      page: Welcome,
+      path: '/',
+      initial: true,
+      guards: [
+        AuthListener,
+      ],
+    ),
     AutoRoute(page: Login, path: '/login', initial: false),
     AutoRoute(page: Signup, path: '/signup', initial: false),
     AutoRoute(
