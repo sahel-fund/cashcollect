@@ -31,7 +31,7 @@ class Intro extends ConsumerWidget {
                         children: [
                           const CircleAvatar(
                             backgroundImage: NetworkImage(
-                                "https://unsplash.com/photos/sibVwORYqs0"),
+                                "https://www.gettyimages.fr/detail/photo/single-mother-playing-with-young-sons-in-front-image-libre-de-droits/1182075825"),
                           ),
                           const SizedBox(
                             width: 8,
