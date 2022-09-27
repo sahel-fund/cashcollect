@@ -22,9 +22,10 @@ Future<void> main() async {
   );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Hive.initFlutter();
-  Hive.registerAdapter<UserModel>(UserAdapter());
+
   await Hive.openBox('settings');
-  await Hive.openBox('userBox');
+  await Hive.openBox<UserModel>('userBox');
+  Hive.registerAdapter<UserModel>(UserAdapter());
   Hive.box('settings').isEmpty
       ? {
           Hive.box('settings').put('language', 'English'),
