@@ -1,6 +1,7 @@
 import 'package:cashcollect/src/extensions/autorouter.dart';
 import 'package:cashcollect/src/models/user_model.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
+import 'package:cashcollect/src/riverpods/firestore_riverpods.dart';
 import 'package:cashcollect/src/screens/auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
@@ -34,7 +35,7 @@ class Authentication {
     );
   }
 
-  signInWithPhoneNumber(BuildContext context,
+  Future<void> signInWithPhoneNumber(BuildContext context,
       {required UserModel data,
       required String verificationID,
       required String smsCode}) async {
@@ -47,7 +48,11 @@ class Authentication {
     UserCredential userCreds = await _read(AuthRiverpods.firebaseAuthProvider)
         .signInWithCredential(credential);
     if (userCreds.user != null) {
-      context.autorouter.replaceNamed('/home');
+      final response = await _read(FirestoreRiverpods.userServicesRiverpods)
+          .createUser(data);
+      response
+          ? context.autorouter.replaceNamed('/home')
+          : context.autorouter.popUntilRoot();
     }
     debugPrint('Signed in with phone number successfully');
   }
