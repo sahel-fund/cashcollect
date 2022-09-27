@@ -40,7 +40,7 @@ class Home extends ConsumerWidget {
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(
-                    IconlyBroken.activity,
+                    IconlyBroken.home,
                     size: 18,
                   ),
                   label: "Home",
@@ -54,7 +54,7 @@ class Home extends ConsumerWidget {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    IconlyBroken.paper,
+                    IconlyBroken.swap,
                     size: 18,
                   ),
                   backgroundColor: Palette.dark,
