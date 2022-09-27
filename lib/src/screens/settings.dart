@@ -1,6 +1,7 @@
 import 'package:cashcollect/i18n/translations.gen.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/widgets/mark.dart';
 import 'package:cashcollect/src/widgets/modals/aboutus.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:iconly/iconly.dart';
 
 class Settings extends ConsumerWidget {
   const Settings({Key? key}) : super(key: key);
@@ -94,7 +96,7 @@ class Settings extends ConsumerWidget {
                 },
               ),
               leading: const Icon(
-                EvaIcons.bell,
+                IconlyBroken.notification,
                 color: Palette.primary,
                 size: 22,
               ),
@@ -147,13 +149,13 @@ class Settings extends ConsumerWidget {
                           radius: 16,
                           backgroundColor: Palette.primary,
                           child: Icon(
-                            EvaIcons.star,
+                            IconlyBroken.star,
                             color: Colors.white,
                             size: 22,
                           ),
                         ),
                         trailing: const Icon(
-                          Icons.chevron_right,
+                          IconlyBroken.arrow_right_2,
                           color: Palette.primary,
                           size: 22,
                         ),
@@ -166,13 +168,13 @@ class Settings extends ConsumerWidget {
                           radius: 16,
                           backgroundColor: Palette.secondary,
                           child: Icon(
-                            EvaIcons.person,
+                            IconlyBroken.user_2,
                             color: Colors.white,
                             size: 22,
                           ),
                         ),
                         trailing: const Icon(
-                          Icons.chevron_right,
+                          IconlyBroken.arrow_right_2,
                           color: Palette.primary,
                           size: 22,
                         ),
@@ -185,13 +187,13 @@ class Settings extends ConsumerWidget {
                           radius: 16,
                           backgroundColor: Palette.tertiary,
                           child: Icon(
-                            EvaIcons.gridOutline,
+                            IconlyBroken.lock,
                             color: Palette.lightGrey,
                             size: 22,
                           ),
                         ),
                         trailing: const Icon(
-                          Icons.chevron_right,
+                          IconlyBroken.arrow_right_2,
                           color: Palette.primary,
                           size: 22,
                         ),
@@ -229,13 +231,13 @@ class Settings extends ConsumerWidget {
                           radius: 16,
                           backgroundColor: Palette.primary,
                           child: Icon(
-                            EvaIcons.info,
+                            IconlyBroken.info_circle,
                             color: Colors.white,
                             size: 22,
                           ),
                         ),
                         trailing: const Icon(
-                          Icons.chevron_right,
+                          IconlyBroken.arrow_right_2,
                           color: Palette.primary,
                           size: 22,
                         ),
@@ -249,7 +251,28 @@ class Settings extends ConsumerWidget {
               ),
             ),
             const SizedBox(
-              height: 54,
+              height: 14,
+            ),
+            ListTile(
+              onTap: () async {
+                final auth = ref.read(AuthRiverpods.firebaseAuthProvider);
+                await auth.signOut();
+                auth.currentUser?.reload();
+              },
+              leading: const CircleAvatar(
+                radius: 16,
+                backgroundColor: Palette.danger,
+                child: Icon(
+                  IconlyBroken.logout,
+                  color: Palette.lightGrey,
+                  size: 22,
+                ),
+              ),
+              title: Text(
+                "Logout",
+                style: TextStyles.designText(
+                    bold: false, color: Palette.primary, size: 16),
+              ),
             ),
             const TradeMark()
           ],
