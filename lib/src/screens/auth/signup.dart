@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/models/user_model.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/widgets/button.dart';
 import 'package:cashcollect/src/widgets/input.dart';
@@ -12,6 +13,8 @@ import 'package:iconly/iconly.dart';
 import 'package:pinput/pinput.dart';
 
 final townRiverpod = StateProvider<String>((ref) => 'Yaounde');
+final genderRiverpod = StateProvider<String>((ref) => '');
+final professionRiverpod = StateProvider<String>((ref) => '');
 final verificationIdRiverpod = StateProvider<String>((ref) => '');
 
 class Signup extends ConsumerWidget {
@@ -24,6 +27,9 @@ class Signup extends ConsumerWidget {
     final phoneController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     final verificationID = ref.watch(verificationIdRiverpod.state);
+    final town = ref.watch(townRiverpod.state);
+    final profession = ref.watch(professionRiverpod.state);
+    final gender = ref.watch(genderRiverpod.state);
     // ignore: prefer_function_declarations_over_variables
     final PhoneCodeSent smsCodeSent = (String verId, int? forceCodeResend) {
       ref.read(verificationIdRiverpod.state).state = verId;
@@ -66,10 +72,20 @@ class Signup extends ConsumerWidget {
                       androidSmsAutofillMethod:
                           AndroidSmsAutofillMethod.smsRetrieverApi,
                       onCompleted: (pin) {
+                        final UserModel user = UserModel(
+                          uid: '',
+                          email: emailController.text,
+                          names: nameController.text,
+                          phoneNumber: phoneController.text,
+                          town: town.state,
+                          profession: profession.state,
+                          gender: gender.state,
+                        );
                         ref
                             .read(AuthRiverpods.authenticationProvider)
                             .signInWithPhoneNumber(
                               context,
+                              data: user,
                               verificationID: verificationID.state,
                               smsCode: pin,
                             );
@@ -176,8 +192,10 @@ class Signup extends ConsumerWidget {
                       hintStyle: TextStyles.designText(
                           bold: false, color: Palette.darkGrey, size: 12),
                     ),
-                    value: ref.watch(townRiverpod.state).state,
-                    onChanged: (value) {},
+                    // value: ref.watch(townRiverpod.state).state,
+                    onChanged: (value) {
+                      ref.read(townRiverpod.state).state = value.toString();
+                    },
                     elevation: 0,
                     icon: const Icon(IconlyBroken.arrow_down_2,
                         color: Palette.primary),
@@ -209,14 +227,66 @@ class Signup extends ConsumerWidget {
                         .toList(),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      prefixIcon: const Icon(IconlyBroken.location,
+                      prefixIcon: const Icon(IconlyBroken.user_2,
                           color: Palette.primary),
                       hintText: 'Gender',
                       hintStyle: TextStyles.designText(
                           bold: false, color: Palette.darkGrey, size: 12),
                     ),
                     // value: ref.watch(townRiverpod.state).state,
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      ref.read(genderRiverpod.state).state = value.toString();
+                    },
+                    elevation: 0,
+                    icon: const Icon(IconlyBroken.arrow_down_2,
+                        color: Palette.primary),
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  height: 58.0,
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  decoration: BoxDecoration(
+                    color: Palette.grey.withOpacity(.5),
+                    borderRadius: BorderRadius.circular(32.0),
+                  ),
+                  child: DropdownButtonFormField(
+                    items: [
+                      "Student",
+                      "Professional",
+                      "College Student",
+                      "Taximan",
+                      "Other"
+                    ]
+                        .map(
+                          (String profession) => DropdownMenuItem(
+                            value: profession,
+                            child: Text(
+                              profession,
+                              style: TextStyles.designText(
+                                  color: Palette.darkGrey,
+                                  size: 14,
+                                  bold: false),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon:
+                          const Icon(IconlyBroken.work, color: Palette.primary),
+                      hintText: 'Profession',
+                      hintStyle: TextStyles.designText(
+                          bold: false, color: Palette.darkGrey, size: 12),
+                    ),
+                    // value: ref.watch(townRiverpod.state).state,
+                    onChanged: (value) {
+                      ref.read(professionRiverpod.state).state =
+                          value.toString();
+                    },
                     elevation: 0,
                     icon: const Icon(IconlyBroken.arrow_down_2,
                         color: Palette.primary),
