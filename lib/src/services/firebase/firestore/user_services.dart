@@ -21,4 +21,34 @@ class UserServices {
       throw Exception(error.toString());
     }
   }
+
+  Future<bool> updateUser(UserModel data) async {
+    final uid = _read(AuthRiverpods.firebaseAuthProvider).currentUser!.uid;
+    try {
+      await _firestore.collection('users').doc(uid).update(data.toMap());
+      return true;
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
+
+  Future<UserModel> getUser() async {
+    final uid = _read(AuthRiverpods.firebaseAuthProvider).currentUser!.uid;
+    try {
+      final user = await _firestore.collection('users').doc(uid).get();
+      return UserModel.fromMap(user.data()!);
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
+
+  Future<bool> deleteUser() async {
+    final uid = _read(AuthRiverpods.firebaseAuthProvider).currentUser!.uid;
+    try {
+      await _firestore.collection('users').doc(uid).delete();
+      return true;
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+  }
 }
