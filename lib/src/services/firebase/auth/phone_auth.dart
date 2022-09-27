@@ -1,4 +1,5 @@
 import 'package:cashcollect/src/extensions/autorouter.dart';
+import 'package:cashcollect/src/models/user_model.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/screens/auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +35,9 @@ class Authentication {
   }
 
   signInWithPhoneNumber(BuildContext context,
-      {required String verificationID, required String smsCode}) async {
+      {required UserModel data,
+      required String verificationID,
+      required String smsCode}) async {
     final credential = PhoneAuthProvider.credential(
       verificationId: verificationID,
       smsCode: smsCode,
