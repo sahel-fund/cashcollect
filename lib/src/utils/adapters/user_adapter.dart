@@ -7,11 +7,11 @@ class UserAdapter extends TypeAdapter<UserModel> {
 
   @override
   UserModel read(BinaryReader reader) {
-    return reader.read();
+    return reader.read(typeId);
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
-    writer.write(obj);
+    writer.write<UserModel>(obj);
   }
 }
