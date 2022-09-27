@@ -93,9 +93,7 @@ class HistoryTile extends StatelessWidget {
                             Text(
                               history.nature,
                               style: TextStyles.designText(
-                                  color: Palette.lightGrey,
-                                  size: 14,
-                                  bold: true),
+                                  color: Palette.primary, size: 14, bold: true),
                             ),
                             const SizedBox(width: 8),
                             Builder(builder: (context) {
@@ -129,7 +127,9 @@ class HistoryTile extends StatelessWidget {
                         Text(
                           "26th October 2022 at 07:40 AM",
                           style: TextStyles.designText(
-                              color: Palette.lightGrey, size: 10, bold: false),
+                              color: Palette.dark.withOpacity(.25),
+                              size: 10,
+                              bold: false),
                         )
                       ],
                     ),
