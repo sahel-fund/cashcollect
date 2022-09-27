@@ -7,7 +7,7 @@ class UserAdapter extends TypeAdapter<UserModel> {
 
   @override
   UserModel read(BinaryReader reader) {
-    return reader.read(typeId);
+    return reader.read(0);
   }
 
   @override
