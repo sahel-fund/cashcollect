@@ -23,10 +23,88 @@ class Signup extends ConsumerWidget {
     final nameController = TextEditingController();
     final phoneController = TextEditingController();
     final formKey = GlobalKey<FormState>();
-    final verificationID = ref.watch(verificationIdRiverpod.state).state;
+    final verificationID = ref.watch(verificationIdRiverpod.state);
     // ignore: prefer_function_declarations_over_variables
     final PhoneCodeSent smsCodeSent = (String verId, int? forceCodeResend) {
       ref.read(verificationIdRiverpod.state).state = verId;
+      showDialog(
+        context: context,
+        builder: (context) {
+          TextEditingController otpController = TextEditingController();
+          return Material(
+            child: Container(
+              color: Palette.primary,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text("Phone OTP validation",
+                        style: TextStyles.designText(
+                            bold: true, size: 28, color: Palette.lightGrey)),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      "Enter the six digit code sent to your phone number to finalize your authentication",
+                      style: TextStyles.designText(
+                        bold: false,
+                        size: 14,
+                        color: Palette.lightGrey.withOpacity(0.5),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Pinput(
+                      length: 6,
+                      controller: otpController,
+                      keyboardType: TextInputType.number,
+                      androidSmsAutofillMethod:
+                          AndroidSmsAutofillMethod.smsRetrieverApi,
+                      onCompleted: (pin) {
+                        ref
+                            .read(AuthRiverpods.authenticationProvider)
+                            .signInWithPhoneNumber(
+                              context,
+                              verificationID: verificationID.state,
+                              smsCode: pin,
+                            );
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Didn't receive the code?",
+                          style: TextStyles.designText(
+                            bold: false,
+                            size: 14,
+                            color: Palette.lightGrey.withOpacity(0.5),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Resend Code",
+                            style: TextStyles.designText(
+                              bold: false,
+                              size: 14,
+                              color: Palette.lightGrey,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
     };
 
     return Scaffold(
@@ -159,91 +237,6 @@ class Signup extends ConsumerWidget {
                               codeSent: smsCodeSent
                               //pin: pin,
                               );
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          TextEditingController otpController =
-                              TextEditingController();
-                          return Material(
-                            child: Container(
-                              color: Palette.primary,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text("Phone OTP validation",
-                                        style: TextStyles.designText(
-                                            bold: true,
-                                            size: 28,
-                                            color: Palette.lightGrey)),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      "Enter the six digit code sent to your phone number to finalize your authentication",
-                                      style: TextStyles.designText(
-                                        bold: false,
-                                        size: 14,
-                                        color:
-                                            Palette.lightGrey.withOpacity(0.5),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 24,
-                                    ),
-                                    Pinput(
-                                      length: 6,
-                                      controller: otpController,
-                                      keyboardType: TextInputType.number,
-                                      androidSmsAutofillMethod:
-                                          AndroidSmsAutofillMethod
-                                              .smsRetrieverApi,
-                                      onCompleted: (pin) {
-                                        ref
-                                            .read(AuthRiverpods
-                                                .authenticationProvider)
-                                            .signInWithPhoneNumber(
-                                              context,
-                                              verificationID: verificationID,
-                                              smsCode: pin,
-                                            );
-                                      },
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Didn't receive the code?",
-                                          style: TextStyles.designText(
-                                            bold: false,
-                                            size: 14,
-                                            color: Palette.lightGrey
-                                                .withOpacity(0.5),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "Resend Code",
-                                            style: TextStyles.designText(
-                                              bold: false,
-                                              size: 14,
-                                              color: Palette.lightGrey,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
                     }
                   },
                   isLoading: false,
