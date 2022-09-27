@@ -199,7 +199,9 @@ class Signup extends ConsumerWidget {
                         hintStyle: TextStyles.designText(
                             bold: false, color: Palette.darkGrey, size: 12),
                       ),
-                      // value: ref.watch(townRiverpod.state).state,
+                      value: ref.watch(townRiverpod.state).state.isEmpty
+                          ? null
+                          : ref.watch(townRiverpod.state).state,
                       onChanged: (value) {
                         ref.read(townRiverpod.state).state = value.toString();
                       },
@@ -240,7 +242,9 @@ class Signup extends ConsumerWidget {
                         hintStyle: TextStyles.designText(
                             bold: false, color: Palette.darkGrey, size: 12),
                       ),
-                      // value: ref.watch(townRiverpod.state).state,
+                      value: ref.watch(genderRiverpod.state).state.isEmpty
+                          ? null
+                          : ref.watch(genderRiverpod.state).state,
                       onChanged: (value) {
                         ref.read(genderRiverpod.state).state = value.toString();
                       },
@@ -289,7 +293,9 @@ class Signup extends ConsumerWidget {
                         hintStyle: TextStyles.designText(
                             bold: false, color: Palette.darkGrey, size: 12),
                       ),
-                      // value: ref.watch(townRiverpod.state).state,
+                      value: ref.watch(professionRiverpod.state).state.isEmpty
+                          ? null
+                          : ref.watch(professionRiverpod.state).state,
                       onChanged: (value) {
                         ref.read(professionRiverpod.state).state =
                             value.toString();
