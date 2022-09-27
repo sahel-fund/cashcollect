@@ -4,6 +4,7 @@ import 'package:cashcollect/src/models/user_model.dart';
 import 'package:cashcollect/src/riverpods/firestore_riverpods.dart';
 import 'package:cashcollect/src/services/hive/userbox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthGuard extends AutoRouteGuard {
@@ -18,11 +19,14 @@ class AuthGuard extends AutoRouteGuard {
     FirebaseAuth.instance.authStateChanges().listen(
       (state) async {
         if (state != null) {
-          // UserModel user = await ref
-          //     .read(FirestoreRiverpods.userServicesRiverpods)
-          //     .getUser();
-          // UserBox.add(user);
-          resolver.next();
+          UserModel user = await ref
+              .read(FirestoreRiverpods.userServicesRiverpods)
+              .getUser();
+          debugPrint('User gotten: $user');
+          UserBox.add(user);
+          debugPrint('User added to box');
+          resolver.next(true);
+          debugPrint('Resolver next');
         } else {
           router.replaceNamed('/signup');
         }
