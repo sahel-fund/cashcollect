@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cashcollect/src/router/guards/auth_guard.dart';
+import 'package:cashcollect/src/router/guards/auth_listener.dart';
 import 'package:cashcollect/src/screens/auth/login.dart';
 import 'package:cashcollect/src/screens/auth/signup.dart';
 import 'package:cashcollect/src/screens/history.dart';
@@ -18,7 +19,10 @@ import 'package:cashcollect/src/screens/welcome.dart';
     AutoRoute(
       page: Home,
       path: '/home',
-      guards: [AuthGuard],
+      guards: [
+        AuthGuard,
+        AuthListener,
+      ],
       children: [
         AutoRoute(page: Intro, path: 'intro'),
         AutoRoute(page: Surveys, path: 'surveys'),
