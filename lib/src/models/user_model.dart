@@ -6,14 +6,18 @@ class UserModel {
   final String email;
   final String phoneNumber;
   final String? avatarURL;
+  final String gender;
   final String profession;
+  final String town;
   UserModel({
     required this.uid,
     required this.names,
     required this.email,
     required this.phoneNumber,
     this.avatarURL,
+    required this.gender,
     required this.profession,
+    required this.town,
   });
 
   UserModel copyWith({
@@ -22,7 +26,9 @@ class UserModel {
     String? email,
     String? phoneNumber,
     String? avatarURL,
+    String? gender,
     String? profession,
+    String? town,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -30,7 +36,9 @@ class UserModel {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       avatarURL: avatarURL ?? this.avatarURL,
+      gender: gender ?? this.gender,
       profession: profession ?? this.profession,
+      town: town ?? this.town,
     );
   }
 
@@ -44,7 +52,9 @@ class UserModel {
     if (avatarURL != null) {
       result.addAll({'avatarURL': avatarURL});
     }
+    result.addAll({'gender': gender});
     result.addAll({'profession': profession});
+    result.addAll({'town': town});
 
     return result;
   }
@@ -56,7 +66,9 @@ class UserModel {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       avatarURL: map['avatarURL'],
+      gender: map['gender'] ?? '',
       profession: map['profession'] ?? '',
+      town: map['town'] ?? '',
     );
   }
 
@@ -67,6 +79,33 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, names: $names, email: $email, phoneNumber: $phoneNumber, avatarURL: $avatarURL, profession: $profession)';
+    return 'UserModel(uid: $uid, names: $names, email: $email, phoneNumber: $phoneNumber, avatarURL: $avatarURL, gender: $gender, profession: $profession, town: $town)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is UserModel &&
+        other.uid == uid &&
+        other.names == names &&
+        other.email == email &&
+        other.phoneNumber == phoneNumber &&
+        other.avatarURL == avatarURL &&
+        other.gender == gender &&
+        other.profession == profession &&
+        other.town == town;
+  }
+
+  @override
+  int get hashCode {
+    return uid.hashCode ^
+        names.hashCode ^
+        email.hashCode ^
+        phoneNumber.hashCode ^
+        avatarURL.hashCode ^
+        gender.hashCode ^
+        profession.hashCode ^
+        town.hashCode;
   }
 }
