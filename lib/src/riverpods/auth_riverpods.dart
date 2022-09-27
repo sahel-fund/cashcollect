@@ -7,7 +7,10 @@ class AuthRiverpods {
       StreamProvider.autoDispose<User?>((ref) {
     return FirebaseAuth.instance.authStateChanges();
   });
-  static final firebaseAuthProvider = Provider((ref) => FirebaseAuth.instance);
+  static final firebaseAuthProvider =
+      Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
   static final authenticationProvider =
       Provider((ref) => Authentication(ref.read));
+  static final currentUserRiverpod =
+      Provider<User?>((ref) => FirebaseAuth.instance.currentUser);
 }
