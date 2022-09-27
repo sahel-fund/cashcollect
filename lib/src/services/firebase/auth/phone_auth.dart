@@ -1,7 +1,8 @@
+import 'package:cashcollect/src/extensions/autorouter.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/screens/auth/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Authentication {
@@ -9,35 +10,42 @@ class Authentication {
   Authentication(this._read);
   final _auth = FirebaseAuth.instance;
 
-  Future<void> verifyPhoneNumber({
-    required String phoneNumber,
-    //required String pin,
-  }) async {
+  Future<void> verifyPhoneNumber(BuildContext context,
+      {required String phoneNumber, required Function(String, int?) codeSent
+      //required String pin,
+      }) async {
     await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential creds) {
-        debugPrint('Verification completed: $creds');
-      },
-      timeout: const Duration(seconds: 60),
-      verificationFailed: (exception) {
-        debugPrint('Verification failed: $exception');
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        _read(verificationID.state).state = verificationId;
-      },
-      codeSent: (String verificationId, forceResendingToken) async {
-        _read(verificationID.state).state = verificationId;
-      },
-    );
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential creds) async {
+          final userCreds = await _auth.signInWithCredential(creds);
+          if (userCreds.user != null) {
+            context.autorouter.replaceNamed('/home');
+          }
+          debugPrint('Verification completed: $creds');
+        },
+        timeout: const Duration(seconds: 60),
+        verificationFailed: (exception) {
+          debugPrint('Verification failed: $exception');
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          _read(verificationIdRiverpod.state).state = verificationId;
+        },
+        codeSent: codeSent);
   }
 
-  signInWithPhoneNumber({required String smsCode}) async {
-    final AuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: _read(verificationID.state).state,
+  signInWithPhoneNumber(BuildContext context,
+      {required String verificationID, required String smsCode}) async {
+    final credential = PhoneAuthProvider.credential(
+      verificationId: verificationID,
       smsCode: smsCode,
     );
+    debugPrint('Credential: $verificationID');
 
-    await _read(AuthRiverpods.firebaseAuthProvider)
+    UserCredential userCreds = await _read(AuthRiverpods.firebaseAuthProvider)
         .signInWithCredential(credential);
+    if (userCreds.user != null) {
+      context.autorouter.replaceNamed('/home');
+    }
+    debugPrint('Signed in with phone number successfully');
   }
 }
