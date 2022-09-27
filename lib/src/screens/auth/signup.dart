@@ -16,15 +16,15 @@ final townRiverpod = StateProvider<String>((ref) => 'Yaounde');
 final genderRiverpod = StateProvider<String>((ref) => '');
 final professionRiverpod = StateProvider<String>((ref) => '');
 final verificationIdRiverpod = StateProvider<String>((ref) => '');
+final emailController = TextEditingController();
+final nameController = TextEditingController();
+final phoneController = TextEditingController();
 
 class Signup extends ConsumerWidget {
   const Signup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emailController = TextEditingController();
-    final nameController = TextEditingController();
-    final phoneController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     final verificationID = ref.watch(verificationIdRiverpod.state);
     final town = ref.watch(townRiverpod.state);
@@ -129,203 +129,212 @@ class Signup extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Form(
             key: formKey,
+            onChanged: () {
+              formKey.currentState!.validate();
+            },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             onWillPop: () async {
               return true;
             },
-            child: Column(
-              children: [
-                const SizedBox(height: 34),
-                SvgPicture.asset(
-                  'assets/svg/intro.svg',
-                  height: 180,
-                  //width: MediaQuery.of(context).size.width * 0.5,
-                ),
-                const SizedBox(height: 14),
-                Input(
-                    icon: IconlyBroken.profile,
-                    label: 'Names',
-                    hint: 'Alpha Casher',
-                    validator: (value) {
-                      return !(value!.length > 4) ? "enter a valid name" : null;
-                    },
-                    isPassword: false,
-                    controller: nameController),
-                Input(
-                    icon: IconlyBroken.message,
-                    label: 'Email',
-                    hint: 'alphacasher@cashcollect.com',
-                    validator: (value) {
-                      return !(value!.contains('@') && value.length > 10)
-                          ? "enter a valid email"
-                          : null;
-                    },
-                    isPassword: false,
-                    controller: emailController),
-                Input(
-                    icon: IconlyBroken.calling,
-                    label: 'Phone number',
-                    type: TextInputType.number,
-                    hint: '+237 690535759',
-                    validator: (value) {
-                      return !(value!.startsWith('6') ||
-                              value.startsWith('237') ||
-                              value.startsWith('+237') && value.length > 9)
-                          ? "enter a valid phone number"
-                          : null;
-                    },
-                    isPassword: false,
-                    controller: phoneController),
-                Container(
-                  height: 58.0,
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  decoration: BoxDecoration(
-                    color: Palette.grey.withOpacity(.5),
-                    borderRadius: BorderRadius.circular(32.0),
+            child: AutofillGroup(
+              child: Column(
+                children: [
+                  const SizedBox(height: 34),
+                  SvgPicture.asset(
+                    'assets/svg/intro.svg',
+                    height: 180,
+                    //width: MediaQuery.of(context).size.width * 0.5,
                   ),
-                  child: DropdownButtonFormField(
-                    items: buildItems(),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: const Icon(IconlyBroken.location,
-                          color: Palette.primary),
-                      hintText: 'Yaounde',
-                      hintStyle: TextStyles.designText(
-                          bold: false, color: Palette.darkGrey, size: 12),
+                  const SizedBox(height: 14),
+                  Input(
+                      icon: IconlyBroken.profile,
+                      label: 'Names',
+                      hint: 'Alpha Casher',
+                      validator: (value) {
+                        return !(value!.length > 4)
+                            ? "enter a valid name"
+                            : null;
+                      },
+                      isPassword: false,
+                      controller: nameController),
+                  Input(
+                      icon: IconlyBroken.message,
+                      label: 'Email',
+                      hint: 'alphacasher@cashcollect.com',
+                      validator: (value) {
+                        return !(value!.contains('@') && value.length > 10)
+                            ? "enter a valid email"
+                            : null;
+                      },
+                      isPassword: false,
+                      controller: emailController),
+                  Input(
+                      icon: IconlyBroken.calling,
+                      label: 'Phone number',
+                      type: TextInputType.number,
+                      hint: '+237 690535759',
+                      validator: (value) {
+                        return !(value!.startsWith('6') ||
+                                value.startsWith('237') ||
+                                value.startsWith('+237') && value.length > 9)
+                            ? "enter a valid phone number"
+                            : null;
+                      },
+                      isPassword: false,
+                      controller: phoneController),
+                  Container(
+                    height: 58.0,
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    decoration: BoxDecoration(
+                      color: Palette.grey.withOpacity(.5),
+                      borderRadius: BorderRadius.circular(32.0),
                     ),
-                    // value: ref.watch(townRiverpod.state).state,
-                    onChanged: (value) {
-                      ref.read(townRiverpod.state).state = value.toString();
-                    },
-                    elevation: 0,
-                    icon: const Icon(IconlyBroken.arrow_down_2,
-                        color: Palette.primary),
-                    borderRadius: BorderRadius.circular(24.0),
+                    child: DropdownButtonFormField(
+                      items: buildItems(),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: const Icon(IconlyBroken.location,
+                            color: Palette.primary),
+                        hintText: 'Yaounde',
+                        hintStyle: TextStyles.designText(
+                            bold: false, color: Palette.darkGrey, size: 12),
+                      ),
+                      // value: ref.watch(townRiverpod.state).state,
+                      onChanged: (value) {
+                        ref.read(townRiverpod.state).state = value.toString();
+                      },
+                      elevation: 0,
+                      icon: const Icon(IconlyBroken.arrow_down_2,
+                          color: Palette.primary),
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  height: 58.0,
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  decoration: BoxDecoration(
-                    color: Palette.grey.withOpacity(.5),
-                    borderRadius: BorderRadius.circular(32.0),
+                  const SizedBox(
+                    height: 12,
                   ),
-                  child: DropdownButtonFormField(
-                    items: ["Man", "Woman"]
-                        .map(
-                          (String gender) => DropdownMenuItem(
-                            value: gender,
-                            child: Text(gender,
+                  Container(
+                    height: 58.0,
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    decoration: BoxDecoration(
+                      color: Palette.grey.withOpacity(.5),
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                    child: DropdownButtonFormField(
+                      items: ["Man", "Woman"]
+                          .map(
+                            (String gender) => DropdownMenuItem(
+                              value: gender,
+                              child: Text(gender,
+                                  style: TextStyles.designText(
+                                      color: Palette.darkGrey,
+                                      size: 14,
+                                      bold: false)),
+                            ),
+                          )
+                          .toList(),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: const Icon(IconlyBroken.user_2,
+                            color: Palette.primary),
+                        hintText: 'Gender',
+                        hintStyle: TextStyles.designText(
+                            bold: false, color: Palette.darkGrey, size: 12),
+                      ),
+                      // value: ref.watch(townRiverpod.state).state,
+                      onChanged: (value) {
+                        ref.read(genderRiverpod.state).state = value.toString();
+                      },
+                      elevation: 0,
+                      icon: const Icon(IconlyBroken.arrow_down_2,
+                          color: Palette.primary),
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Container(
+                    height: 58.0,
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    decoration: BoxDecoration(
+                      color: Palette.grey.withOpacity(.5),
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                    child: DropdownButtonFormField(
+                      items: [
+                        "Student",
+                        "Professional",
+                        "College Student",
+                        "Taximan",
+                        "Other"
+                      ]
+                          .map(
+                            (String profession) => DropdownMenuItem(
+                              value: profession,
+                              child: Text(
+                                profession,
                                 style: TextStyles.designText(
                                     color: Palette.darkGrey,
                                     size: 14,
-                                    bold: false)),
-                          ),
-                        )
-                        .toList(),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: const Icon(IconlyBroken.user_2,
-                          color: Palette.primary),
-                      hintText: 'Gender',
-                      hintStyle: TextStyles.designText(
-                          bold: false, color: Palette.darkGrey, size: 12),
-                    ),
-                    // value: ref.watch(townRiverpod.state).state,
-                    onChanged: (value) {
-                      ref.read(genderRiverpod.state).state = value.toString();
-                    },
-                    elevation: 0,
-                    icon: const Icon(IconlyBroken.arrow_down_2,
-                        color: Palette.primary),
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  height: 58.0,
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  decoration: BoxDecoration(
-                    color: Palette.grey.withOpacity(.5),
-                    borderRadius: BorderRadius.circular(32.0),
-                  ),
-                  child: DropdownButtonFormField(
-                    items: [
-                      "Student",
-                      "Professional",
-                      "College Student",
-                      "Taximan",
-                      "Other"
-                    ]
-                        .map(
-                          (String profession) => DropdownMenuItem(
-                            value: profession,
-                            child: Text(
-                              profession,
-                              style: TextStyles.designText(
-                                  color: Palette.darkGrey,
-                                  size: 14,
-                                  bold: false),
+                                    bold: false),
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon:
-                          const Icon(IconlyBroken.work, color: Palette.primary),
-                      hintText: 'Profession',
-                      hintStyle: TextStyles.designText(
-                          bold: false, color: Palette.darkGrey, size: 12),
+                          )
+                          .toList(),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: const Icon(IconlyBroken.work,
+                            color: Palette.primary),
+                        hintText: 'Profession',
+                        hintStyle: TextStyles.designText(
+                            bold: false, color: Palette.darkGrey, size: 12),
+                      ),
+                      // value: ref.watch(townRiverpod.state).state,
+                      onChanged: (value) {
+                        ref.read(professionRiverpod.state).state =
+                            value.toString();
+                      },
+                      elevation: 0,
+                      icon: const Icon(IconlyBroken.arrow_down_2,
+                          color: Palette.primary),
+                      borderRadius: BorderRadius.circular(24.0),
                     ),
-                    // value: ref.watch(townRiverpod.state).state,
-                    onChanged: (value) {
-                      ref.read(professionRiverpod.state).state =
-                          value.toString();
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  Button(
+                    callback: () {
+                      if (formKey.currentState!.validate()) {
+                        //formKey.currentState!.save();
+                        ref
+                            .read(AuthRiverpods.authenticationProvider)
+                            .verifyPhoneNumber(context,
+                                phoneNumber:
+                                    "+237${phoneController.value.text}",
+                                codeSent: smsCodeSent
+                                //pin: pin,
+                                );
+                      }
                     },
-                    elevation: 0,
-                    icon: const Icon(IconlyBroken.arrow_down_2,
-                        color: Palette.primary),
-                    borderRadius: BorderRadius.circular(24.0),
+                    isLoading: false,
+                    label: "Continue",
                   ),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Button(
-                  callback: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      ref
-                          .read(AuthRiverpods.authenticationProvider)
-                          .verifyPhoneNumber(context,
-                              phoneNumber: "+237${phoneController.value.text}",
-                              codeSent: smsCodeSent
-                              //pin: pin,
-                              );
-                    }
-                  },
-                  isLoading: false,
-                  label: "Continue",
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                TextButton(
-                  onPressed: () {
-                    context.router.pushNamed('/login');
-                  },
-                  child: Text(
-                    "Already have an account? Login",
-                    style: TextStyles.designText(
-                        color: Palette.darkGrey, size: 14, bold: false),
+                  const SizedBox(
+                    height: 24,
                   ),
-                ),
-              ],
+                  TextButton(
+                    onPressed: () {
+                      context.router.pushNamed('/login');
+                    },
+                    child: Text(
+                      "Already have an account? Login",
+                      style: TextStyles.designText(
+                          color: Palette.darkGrey, size: 14, bold: false),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
