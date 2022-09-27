@@ -1,5 +1,6 @@
 import 'package:cashcollect/firebase_options.dart';
 import 'package:cashcollect/src/config/palette.dart';
+import 'package:cashcollect/src/models/user_model.dart';
 import 'package:cashcollect/src/router/guards/auth_guard.dart';
 import 'package:cashcollect/src/router/guards/auth_listener.dart';
 import 'package:cashcollect/src/router/router.gr.dart';
@@ -21,7 +22,7 @@ Future<void> main() async {
   );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Hive.initFlutter();
-  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter<UserModel>(UserAdapter());
   await Hive.openBox('settings');
   await Hive.openBox('userBox');
   Hive.box('settings').isEmpty
