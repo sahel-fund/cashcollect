@@ -105,10 +105,7 @@ class AppRouter extends _i9.RootStackRouter {
         _i9.RouteConfig(
           Home.name,
           path: '/home',
-          guards: [
-            authGuard,
-            authListener,
-          ],
+          guards: [authGuard],
           children: [
             _i9.RouteConfig(
               Intro.name,
