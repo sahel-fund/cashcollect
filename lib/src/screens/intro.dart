@@ -1,11 +1,16 @@
 import 'package:awesome_card/awesome_card.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/models/user_model.dart';
+import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
+import 'package:cashcollect/src/services/hive/userbox.dart';
 import 'package:cashcollect/src/widgets/box.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconly/iconly.dart';
+
+final GlobalKey<ScaffoldState> _key = GlobalKey();
 
 class Intro extends ConsumerWidget {
   const Intro({Key? key}) : super(key: key);
@@ -13,6 +18,38 @@ class Intro extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      key: _key,
+      drawer: Builder(builder: (context) {
+        final UserModel user = UserBox.getUser(
+            ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
+        return Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Palette.primary,
+                ),
+                child: Text(user.names),
+              ),
+              ListTile(
+                title: Text(user.profession),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                title: Text(user.email),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+            ],
+          ),
+        );
+      }),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Center(
@@ -30,9 +67,14 @@ class Intro extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          const CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://www.gettyimages.fr/detail/photo/single-mother-playing-with-young-sons-in-front-image-libre-de-droits/1182075825"),
+                          GestureDetector(
+                            onTap: () {
+                              _key.currentState!.openDrawer();
+                            },
+                            child: const CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://www.gettyimages.fr/detail/photo/single-mother-playing-with-young-sons-in-front-image-libre-de-droits/1182075825"),
+                            ),
                           ),
                           const SizedBox(
                             width: 8,
