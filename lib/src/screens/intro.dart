@@ -5,6 +5,7 @@ import 'package:cashcollect/src/widgets/box.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconly/iconly.dart';
 
 class Intro extends ConsumerWidget {
   const Intro({Key? key}) : super(key: key);
@@ -44,7 +45,7 @@ class Intro extends ConsumerWidget {
                         ],
                       ),
                       const Icon(
-                        EvaIcons.bell,
+                        IconlyBroken.notification,
                         color: Palette.primary,
                       )
                     ],
@@ -120,7 +121,7 @@ class Intro extends ConsumerWidget {
                     Box(
                       title: 'SUPPORT',
                       icon: Icon(
-                        Icons.support_agent,
+                        IconlyBroken.work,
                         size: 54,
                         color: Palette.lightGrey,
                       ),
