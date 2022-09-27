@@ -1,6 +1,7 @@
 import 'package:cashcollect/firebase_options.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/router/router.gr.dart';
+import 'package:cashcollect/src/utils/adapters/user_adapter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemChrome, DeviceOrientation;
@@ -18,6 +19,7 @@ Future<void> main() async {
   );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Hive.initFlutter();
+  Hive.registerAdapter(UserAdapter());
   await Hive.openBox('settings');
   await Hive.openBox('userBox');
   Hive.box('settings').isEmpty
