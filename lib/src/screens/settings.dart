@@ -1,6 +1,7 @@
 import 'package:cashcollect/i18n/translations.gen.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/extensions/autorouter.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/widgets/mark.dart';
 import 'package:cashcollect/src/widgets/modals/aboutus.dart';
@@ -258,6 +259,7 @@ class Settings extends ConsumerWidget {
                 final auth = ref.read(AuthRiverpods.firebaseAuthProvider);
                 await auth.signOut();
                 auth.currentUser?.reload();
+                context.autorouter.popUntilRoot();
               },
               leading: const CircleAvatar(
                 radius: 16,
