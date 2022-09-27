@@ -50,9 +50,10 @@ class Authentication {
     if (userCreds.user != null) {
       final response = await _read(FirestoreRiverpods.userServicesRiverpods)
           .createUser(data);
+      debugPrint('User created: $response');
       response
           ? context.autorouter.replaceNamed('/home')
-          : context.autorouter.popUntilRoot();
+          : context.autorouter.replaceNamed('/');
     }
     debugPrint('Signed in with phone number successfully');
   }
