@@ -20,7 +20,7 @@ class Intro extends ConsumerWidget {
     return Scaffold(
       key: _key,
       drawer: Builder(builder: (context) {
-        final UserModel user = UserBox.getUser(
+        final UserModel? user = UserBox.getUser(
             ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
         return Drawer(
           child: ListView(
@@ -30,7 +30,7 @@ class Intro extends ConsumerWidget {
                 decoration: const BoxDecoration(
                   color: Palette.primary,
                 ),
-                child: Text(user.names),
+                child: Text(user!.names),
               ),
               ListTile(
                 title: Text(user.profession),
