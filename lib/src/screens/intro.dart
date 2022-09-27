@@ -19,37 +19,39 @@ class Intro extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       key: _key,
-      drawer: Builder(builder: (context) {
-        final UserModel? user = UserBox.getUser(
-            ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
-        return Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Palette.primary,
+      drawer: Builder(
+        builder: (context) {
+          final UserModel? user = UserBox.getUser(
+              ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
+          return Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: const BoxDecoration(
+                    color: Palette.primary,
+                  ),
+                  child: Text(user!.names),
                 ),
-                child: Text(user!.names),
-              ),
-              ListTile(
-                title: Text(user.profession),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: Text(user.email),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ],
-          ),
-        );
-      }),
+                ListTile(
+                  title: Text(user.profession),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  title: Text(user.email),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Center(
