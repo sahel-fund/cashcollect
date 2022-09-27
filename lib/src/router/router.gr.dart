@@ -12,6 +12,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:cashcollect/src/router/guards/auth_guard.dart' as _i11;
+import 'package:cashcollect/src/router/guards/auth_listener.dart' as _i12;
 import 'package:cashcollect/src/screens/auth/login.dart' as _i2;
 import 'package:cashcollect/src/screens/auth/signup.dart' as _i3;
 import 'package:cashcollect/src/screens/history.dart' as _i7;
@@ -23,8 +25,15 @@ import 'package:cashcollect/src/screens/welcome.dart' as _i1;
 import 'package:flutter/material.dart' as _i10;
 
 class AppRouter extends _i9.RootStackRouter {
-  AppRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+  AppRouter({
+    _i10.GlobalKey<_i10.NavigatorState>? navigatorKey,
+    required this.authGuard,
+    required this.authListener,
+  }) : super(navigatorKey);
+
+  final _i11.AuthGuard authGuard;
+
+  final _i12.AuthListener authListener;
 
   @override
   final Map<String, _i9.PageFactory> pagesMap = {
@@ -95,6 +104,10 @@ class AppRouter extends _i9.RootStackRouter {
         _i9.RouteConfig(
           Home.name,
           path: '/home',
+          guards: [
+            authGuard,
+            authListener,
+          ],
           children: [
             _i9.RouteConfig(
               Intro.name,
