@@ -5,6 +5,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:iconly/iconly.dart';
 
 class Home extends ConsumerWidget {
   const Home({Key? key}) : super(key: key);
@@ -39,21 +40,21 @@ class Home extends ConsumerWidget {
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.dashboard,
+                    IconlyBroken.activity,
                     size: 18,
                   ),
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    EvaIcons.barChart,
+                    IconlyBroken.chart,
                     size: 18,
                   ),
                   label: "Surveys",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.newspaper,
+                    IconlyBroken.paper,
                     size: 18,
                   ),
                   backgroundColor: Palette.dark,
@@ -61,7 +62,7 @@ class Home extends ConsumerWidget {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    EvaIcons.settings,
+                    IconlyBroken.setting,
                     size: 18,
                   ),
                   backgroundColor: Palette.dark,
