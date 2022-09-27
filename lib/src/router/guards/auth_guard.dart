@@ -18,10 +18,10 @@ class AuthGuard extends AutoRouteGuard {
     FirebaseAuth.instance.authStateChanges().listen(
       (state) async {
         if (state != null) {
-          UserModel user = await ref
-              .read(FirestoreRiverpods.userServicesRiverpods)
-              .getUser();
-          UserBox.add(user);
+          // UserModel user = await ref
+          //     .read(FirestoreRiverpods.userServicesRiverpods)
+          //     .getUser();
+          // UserBox.add(user);
           resolver.next();
         } else {
           router.replaceNamed('/signup');
