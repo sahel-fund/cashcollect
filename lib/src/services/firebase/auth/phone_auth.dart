@@ -11,26 +11,26 @@ class Authentication {
   final _auth = FirebaseAuth.instance;
 
   Future<void> verifyPhoneNumber(BuildContext context,
-      {required String phoneNumber, required Function(String, int?) codeSent
-      //required String pin,
-      }) async {
+      {required String phoneNumber,
+      required Function(String, int?) codeSent}) async {
     await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        verificationCompleted: (PhoneAuthCredential creds) async {
-          final userCreds = await _auth.signInWithCredential(creds);
-          if (userCreds.user != null) {
-            context.autorouter.replaceNamed('/home');
-          }
-          debugPrint('Verification completed: $creds');
-        },
-        timeout: const Duration(seconds: 60),
-        verificationFailed: (exception) {
-          debugPrint('Verification failed: $exception');
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          _read(verificationIdRiverpod.state).state = verificationId;
-        },
-        codeSent: codeSent);
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential creds) async {
+        final userCreds = await _auth.signInWithCredential(creds);
+        if (userCreds.user != null) {
+          context.autorouter.replaceNamed('/home');
+        }
+        debugPrint('Verification completed: $creds');
+      },
+      timeout: const Duration(seconds: 60),
+      verificationFailed: (exception) {
+        debugPrint('Verification failed: $exception');
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _read(verificationIdRiverpod.state).state = verificationId;
+      },
+      codeSent: codeSent,
+    );
   }
 
   signInWithPhoneNumber(BuildContext context,
