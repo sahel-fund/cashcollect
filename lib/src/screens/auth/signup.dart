@@ -4,6 +4,7 @@ import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/widgets/button.dart';
 import 'package:cashcollect/src/widgets/input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +12,7 @@ import 'package:iconly/iconly.dart';
 import 'package:pinput/pinput.dart';
 
 final townRiverpod = StateProvider<String>((ref) => 'Yaounde');
-final verificationID = StateProvider<String>((ref) => '');
+final verificationIdRiverpod = StateProvider<String>((ref) => '');
 
 class Signup extends ConsumerWidget {
   const Signup({Key? key}) : super(key: key);
@@ -19,10 +20,14 @@ class Signup extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = TextEditingController();
-    final cityController = TextEditingController();
     final nameController = TextEditingController();
     final phoneController = TextEditingController();
     final formKey = GlobalKey<FormState>();
+    final verificationID = ref.watch(verificationIdRiverpod.state).state;
+    // ignore: prefer_function_declarations_over_variables
+    final PhoneCodeSent smsCodeSent = (String verId, int? forceCodeResend) {
+      ref.read(verificationIdRiverpod.state).state = verId;
+    };
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -149,10 +154,11 @@ class Signup extends ConsumerWidget {
                       formKey.currentState!.save();
                       ref
                           .read(AuthRiverpods.authenticationProvider)
-                          .verifyPhoneNumber(
-                            phoneNumber: "+237${phoneController.value.text}",
-                            //pin: pin,
-                          );
+                          .verifyPhoneNumber(context,
+                              phoneNumber: "+237${phoneController.value.text}",
+                              codeSent: smsCodeSent
+                              //pin: pin,
+                              );
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -193,10 +199,6 @@ class Signup extends ConsumerWidget {
                                       length: 6,
                                       controller: otpController,
                                       keyboardType: TextInputType.number,
-                                      onClipboardFound: (data) {
-                                        otpController.value =
-                                            TextEditingValue(text: data);
-                                      },
                                       androidSmsAutofillMethod:
                                           AndroidSmsAutofillMethod
                                               .smsRetrieverApi,
@@ -205,6 +207,8 @@ class Signup extends ConsumerWidget {
                                             .read(AuthRiverpods
                                                 .authenticationProvider)
                                             .signInWithPhoneNumber(
+                                              context,
+                                              verificationID: verificationID,
                                               smsCode: pin,
                                             );
                                       },
