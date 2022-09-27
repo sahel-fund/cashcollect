@@ -28,7 +28,6 @@ import 'package:cashcollect/src/screens/welcome.dart';
       path: '/home',
       guards: [
         AuthGuard,
-        AuthListener,
       ],
       children: [
         AutoRoute(page: Intro, path: 'intro'),
