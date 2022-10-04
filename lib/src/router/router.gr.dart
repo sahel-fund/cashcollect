@@ -17,11 +17,11 @@ import 'package:cashcollect/src/router/guards/auth_listener.dart' as _i12;
 import 'package:cashcollect/src/screens/auth/login.dart' as _i2;
 import 'package:cashcollect/src/screens/auth/signup.dart' as _i3;
 import 'package:cashcollect/src/screens/history.dart' as _i8;
-import 'package:cashcollect/src/screens/home.dart' as _i5;
-import 'package:cashcollect/src/screens/intro.dart' as _i6;
+import 'package:cashcollect/src/screens/home.dart' as _i6;
+import 'package:cashcollect/src/screens/intro.dart' as _i7;
 import 'package:cashcollect/src/screens/settings.dart' as _i9;
 import 'package:cashcollect/src/screens/survey/survey_intro.dart' as _i4;
-import 'package:cashcollect/src/screens/survey/surveys.dart' as _i7;
+import 'package:cashcollect/src/screens/survey/surveys.dart' as _i5;
 import 'package:cashcollect/src/screens/welcome.dart' as _i1;
 import 'package:flutter/material.dart' as _i11;
 
@@ -62,22 +62,28 @@ class AppRouter extends _i10.RootStackRouter {
         child: const _i4.SurveyIntro(),
       );
     },
+    SurveyQuestions.name: (routeData) {
+      return _i10.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.SurveyQuestions(),
+      );
+    },
     Home.name: (routeData) {
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i5.Home(),
+        child: const _i6.Home(),
       );
     },
     Intro.name: (routeData) {
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i6.Intro(),
+        child: const _i7.Intro(),
       );
     },
     Surveys.name: (routeData) {
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i7.Surveys(),
+        child: const _i5.Surveys(),
       );
     },
     History.name: (routeData) {
@@ -112,6 +118,10 @@ class AppRouter extends _i10.RootStackRouter {
         _i10.RouteConfig(
           SurveyIntro.name,
           path: '/survey-intro',
+        ),
+        _i10.RouteConfig(
+          SurveyQuestions.name,
+          path: '/survey-questions',
         ),
         _i10.RouteConfig(
           Home.name,
@@ -192,7 +202,19 @@ class SurveyIntro extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.Home]
+/// [_i5.SurveyQuestions]
+class SurveyQuestions extends _i10.PageRouteInfo<void> {
+  const SurveyQuestions()
+      : super(
+          SurveyQuestions.name,
+          path: '/survey-questions',
+        );
+
+  static const String name = 'SurveyQuestions';
+}
+
+/// generated route for
+/// [_i6.Home]
 class Home extends _i10.PageRouteInfo<void> {
   const Home({List<_i10.PageRouteInfo>? children})
       : super(
@@ -205,7 +227,7 @@ class Home extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.Intro]
+/// [_i7.Intro]
 class Intro extends _i10.PageRouteInfo<void> {
   const Intro()
       : super(
@@ -217,7 +239,7 @@ class Intro extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.Surveys]
+/// [_i5.Surveys]
 class Surveys extends _i10.PageRouteInfo<void> {
   const Surveys()
       : super(
