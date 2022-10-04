@@ -12,6 +12,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
+import 'package:cashcollect/src/models/survey_model.dart' as _i15;
+import 'package:cashcollect/src/models/survey_question.dart' as _i16;
 import 'package:cashcollect/src/router/guards/auth_guard.dart' as _i13;
 import 'package:cashcollect/src/router/guards/auth_listener.dart' as _i12;
 import 'package:cashcollect/src/screens/auth/login.dart' as _i2;
@@ -24,6 +26,7 @@ import 'package:cashcollect/src/screens/survey/survey_intro.dart' as _i4;
 import 'package:cashcollect/src/screens/survey/surveys.dart' as _i5;
 import 'package:cashcollect/src/screens/welcome.dart' as _i1;
 import 'package:flutter/material.dart' as _i11;
+import 'package:flutter/widgets.dart' as _i14;
 
 class AppRouter extends _i10.RootStackRouter {
   AppRouter({
@@ -57,15 +60,23 @@ class AppRouter extends _i10.RootStackRouter {
       );
     },
     SurveyIntro.name: (routeData) {
+      final args = routeData.argsAs<SurveyIntroArgs>();
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i4.SurveyIntro(),
+        child: _i4.SurveyIntro(
+          key: args.key,
+          survey: args.survey,
+        ),
       );
     },
     SurveyQuestions.name: (routeData) {
+      final args = routeData.argsAs<SurveyQuestionsArgs>();
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i5.SurveyQuestions(),
+        child: _i5.SurveyQuestions(
+          key: args.key,
+          questions: args.questions,
+        ),
       );
     },
     Home.name: (routeData) {
@@ -191,26 +202,70 @@ class Signup extends _i10.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.SurveyIntro]
-class SurveyIntro extends _i10.PageRouteInfo<void> {
-  const SurveyIntro()
-      : super(
+class SurveyIntro extends _i10.PageRouteInfo<SurveyIntroArgs> {
+  SurveyIntro({
+    _i14.Key? key,
+    required _i15.SurveyModel survey,
+  }) : super(
           SurveyIntro.name,
           path: '/survey-intro',
+          args: SurveyIntroArgs(
+            key: key,
+            survey: survey,
+          ),
         );
 
   static const String name = 'SurveyIntro';
 }
 
+class SurveyIntroArgs {
+  const SurveyIntroArgs({
+    this.key,
+    required this.survey,
+  });
+
+  final _i14.Key? key;
+
+  final _i15.SurveyModel survey;
+
+  @override
+  String toString() {
+    return 'SurveyIntroArgs{key: $key, survey: $survey}';
+  }
+}
+
 /// generated route for
 /// [_i5.SurveyQuestions]
-class SurveyQuestions extends _i10.PageRouteInfo<void> {
-  const SurveyQuestions()
-      : super(
+class SurveyQuestions extends _i10.PageRouteInfo<SurveyQuestionsArgs> {
+  SurveyQuestions({
+    _i14.Key? key,
+    required List<_i16.SurveyQuestion> questions,
+  }) : super(
           SurveyQuestions.name,
           path: '/survey-questions',
+          args: SurveyQuestionsArgs(
+            key: key,
+            questions: questions,
+          ),
         );
 
   static const String name = 'SurveyQuestions';
+}
+
+class SurveyQuestionsArgs {
+  const SurveyQuestionsArgs({
+    this.key,
+    required this.questions,
+  });
+
+  final _i14.Key? key;
+
+  final List<_i16.SurveyQuestion> questions;
+
+  @override
+  String toString() {
+    return 'SurveyQuestionsArgs{key: $key, questions: $questions}';
+  }
 }
 
 /// generated route for
