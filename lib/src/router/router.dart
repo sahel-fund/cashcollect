@@ -25,6 +25,7 @@ import 'package:cashcollect/src/screens/welcome.dart';
     AutoRoute(page: Login, path: '/login', initial: false),
     AutoRoute(page: Signup, path: '/signup', initial: false),
     AutoRoute(page: SurveyIntro, path: '/survey-intro', initial: false),
+    AutoRoute(page: SurveyQuestions, path: '/survey-questions', initial: false),
     AutoRoute(
       page: Home,
       path: '/home',
