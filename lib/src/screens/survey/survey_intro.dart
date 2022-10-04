@@ -1,7 +1,10 @@
+
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/extensions/autorouter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cashcollect/src/router/router.gr.dart' as router;
 
 class SurveyIntro extends ConsumerWidget {
   const SurveyIntro({Key? key}) : super(key: key);
@@ -13,28 +16,30 @@ class SurveyIntro extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14.0),
       child: WillPopScope(
         onWillPop: () async {
-          bool value = false;
+          return true;
+          // ignore: dead_code
           showDialog(
             context: context,
-            builder: (ctx) => AlertDialog(
+            builder: (context) => AlertDialog(
               content: const Text(
                   "Once you start the survey, you can't go back until you finish it. Are you sure you want to proceed?"),
-              title: const Text("You have raised a Alert Dialog Box"),
+              title: const Text("Survey completion"),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    value = true;
+                    Navigator.pop(context);
                   },
-                  child: Container(
-                    color: Colors.green,
-                    padding: const EdgeInsets.all(14),
-                    child: const Text("Okay"),
-                  ),
+                  child: const Text("Okay"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Exit"),
                 ),
               ],
             ),
           );
-          return value;
         },
         child: Column(
           children: [
@@ -63,6 +68,9 @@ class SurveyIntro extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
+            const SizedBox(
+              height: 4,
+            ),
             Text(
               'Answer a few questions to help us improve our services',
               style: TextStyles.designText(
@@ -70,6 +78,25 @@ class SurveyIntro extends ConsumerWidget {
             ),
             const SizedBox(
               height: 20,
+            ),
+            Container(
+              height: 45,
+              width: 150,
+              decoration: BoxDecoration(
+                  color: Palette.secondary,
+                  borderRadius: BorderRadius.circular(14)),
+              child: Center(
+                child: TextButton(
+                  onPressed: () {
+                    context.autorouter.push(const router.SurveyQuestions());
+                  },
+                  child: Text(
+                    "Let's go in",
+                    style: TextStyles.designText(
+                        color: Palette.lightGrey, size: 14, bold: true),
+                  ),
+                ),
+              ),
             ),
             // Expanded(
             //   child: ListView.builder(
