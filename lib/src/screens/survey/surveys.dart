@@ -1,5 +1,7 @@
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/extensions/autorouter.dart';
+import 'package:cashcollect/src/widgets/box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,9 +17,38 @@ class Surveys extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       key: _key,
-      body: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-        child: SurveyQuestions(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        child: Column(
+          children: [
+            Wrap(
+              spacing: 12.0,
+              runSpacing: 12.0,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    context.autorouter.pushNamed('/survey-intro');
+                  },
+                  child: const Box(
+                    title: "Elections",
+                    desc: "Answer a few questionss",
+                    icon: Icon(Icons.abc, color: Palette.secondary),
+                  ),
+                ),
+                const Box(
+                  title: "Elections",
+                  desc: "Answer a few questions",
+                  icon: Icon(Icons.abc, color: Palette.secondary),
+                ),
+                const Box(
+                  title: "Elections",
+                  desc: "Answer a few questions",
+                  icon: Icon(Icons.abc, color: Palette.secondary),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
