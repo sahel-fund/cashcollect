@@ -7,6 +7,7 @@ import 'package:cashcollect/src/screens/history.dart';
 import 'package:cashcollect/src/screens/home.dart';
 import 'package:cashcollect/src/screens/intro.dart';
 import 'package:cashcollect/src/screens/settings.dart';
+import 'package:cashcollect/src/screens/survey/survey_intro.dart';
 import 'package:cashcollect/src/screens/survey/surveys.dart';
 import 'package:cashcollect/src/screens/welcome.dart';
 
@@ -23,6 +24,7 @@ import 'package:cashcollect/src/screens/welcome.dart';
     ),
     AutoRoute(page: Login, path: '/login', initial: false),
     AutoRoute(page: Signup, path: '/signup', initial: false),
+    AutoRoute(page: SurveyIntro, path: '/survey-intro', initial: false),
     AutoRoute(
       page: Home,
       path: '/home',
