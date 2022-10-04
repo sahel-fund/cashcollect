@@ -11,118 +11,129 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i9;
-import 'package:cashcollect/src/router/guards/auth_guard.dart' as _i12;
-import 'package:cashcollect/src/router/guards/auth_listener.dart' as _i11;
+import 'package:auto_route/auto_route.dart' as _i10;
+import 'package:cashcollect/src/router/guards/auth_guard.dart' as _i13;
+import 'package:cashcollect/src/router/guards/auth_listener.dart' as _i12;
 import 'package:cashcollect/src/screens/auth/login.dart' as _i2;
 import 'package:cashcollect/src/screens/auth/signup.dart' as _i3;
-import 'package:cashcollect/src/screens/history.dart' as _i7;
-import 'package:cashcollect/src/screens/home.dart' as _i4;
-import 'package:cashcollect/src/screens/intro.dart' as _i5;
-import 'package:cashcollect/src/screens/settings.dart' as _i8;
-import 'package:cashcollect/src/screens/survey/surveys.dart' as _i6;
+import 'package:cashcollect/src/screens/history.dart' as _i8;
+import 'package:cashcollect/src/screens/home.dart' as _i5;
+import 'package:cashcollect/src/screens/intro.dart' as _i6;
+import 'package:cashcollect/src/screens/settings.dart' as _i9;
+import 'package:cashcollect/src/screens/survey/survey_intro.dart' as _i4;
+import 'package:cashcollect/src/screens/survey/surveys.dart' as _i7;
 import 'package:cashcollect/src/screens/welcome.dart' as _i1;
-import 'package:flutter/material.dart' as _i10;
+import 'package:flutter/material.dart' as _i11;
 
-class AppRouter extends _i9.RootStackRouter {
+class AppRouter extends _i10.RootStackRouter {
   AppRouter({
-    _i10.GlobalKey<_i10.NavigatorState>? navigatorKey,
+    _i11.GlobalKey<_i11.NavigatorState>? navigatorKey,
     required this.authListener,
     required this.authGuard,
   }) : super(navigatorKey);
 
-  final _i11.AuthListener authListener;
+  final _i12.AuthListener authListener;
 
-  final _i12.AuthGuard authGuard;
+  final _i13.AuthGuard authGuard;
 
   @override
-  final Map<String, _i9.PageFactory> pagesMap = {
+  final Map<String, _i10.PageFactory> pagesMap = {
     Welcome.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i1.Welcome(),
       );
     },
     Login.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i2.Login(),
       );
     },
     Signup.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i3.Signup(),
       );
     },
-    Home.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+    SurveyIntro.name: (routeData) {
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i4.Home(),
+        child: const _i4.SurveyIntro(),
+      );
+    },
+    Home.name: (routeData) {
+      return _i10.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.Home(),
       );
     },
     Intro.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i5.Intro(),
+        child: const _i6.Intro(),
       );
     },
     Surveys.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i6.Surveys(),
+        child: const _i7.Surveys(),
       );
     },
     History.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i7.History(),
+        child: const _i8.History(),
       );
     },
     Settings.name: (routeData) {
-      return _i9.AdaptivePage<dynamic>(
+      return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i8.Settings(),
+        child: const _i9.Settings(),
       );
     },
   };
 
   @override
-  List<_i9.RouteConfig> get routes => [
-        _i9.RouteConfig(
+  List<_i10.RouteConfig> get routes => [
+        _i10.RouteConfig(
           Welcome.name,
           path: '/',
           guards: [authListener],
         ),
-        _i9.RouteConfig(
+        _i10.RouteConfig(
           Login.name,
           path: '/login',
         ),
-        _i9.RouteConfig(
+        _i10.RouteConfig(
           Signup.name,
           path: '/signup',
         ),
-        _i9.RouteConfig(
+        _i10.RouteConfig(
+          SurveyIntro.name,
+          path: '/survey-intro',
+        ),
+        _i10.RouteConfig(
           Home.name,
           path: '/home',
           guards: [authGuard],
           children: [
-            _i9.RouteConfig(
+            _i10.RouteConfig(
               Intro.name,
               path: 'intro',
               parent: Home.name,
             ),
-            _i9.RouteConfig(
+            _i10.RouteConfig(
               Surveys.name,
               path: 'surveys',
               parent: Home.name,
             ),
-            _i9.RouteConfig(
+            _i10.RouteConfig(
               History.name,
               path: 'history',
               parent: Home.name,
             ),
-            _i9.RouteConfig(
+            _i10.RouteConfig(
               Settings.name,
               path: 'settings',
               parent: Home.name,
@@ -134,7 +145,7 @@ class AppRouter extends _i9.RootStackRouter {
 
 /// generated route for
 /// [_i1.Welcome]
-class Welcome extends _i9.PageRouteInfo<void> {
+class Welcome extends _i10.PageRouteInfo<void> {
   const Welcome()
       : super(
           Welcome.name,
@@ -146,7 +157,7 @@ class Welcome extends _i9.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.Login]
-class Login extends _i9.PageRouteInfo<void> {
+class Login extends _i10.PageRouteInfo<void> {
   const Login()
       : super(
           Login.name,
@@ -158,7 +169,7 @@ class Login extends _i9.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.Signup]
-class Signup extends _i9.PageRouteInfo<void> {
+class Signup extends _i10.PageRouteInfo<void> {
   const Signup()
       : super(
           Signup.name,
@@ -169,9 +180,21 @@ class Signup extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.Home]
-class Home extends _i9.PageRouteInfo<void> {
-  const Home({List<_i9.PageRouteInfo>? children})
+/// [_i4.SurveyIntro]
+class SurveyIntro extends _i10.PageRouteInfo<void> {
+  const SurveyIntro()
+      : super(
+          SurveyIntro.name,
+          path: '/survey-intro',
+        );
+
+  static const String name = 'SurveyIntro';
+}
+
+/// generated route for
+/// [_i5.Home]
+class Home extends _i10.PageRouteInfo<void> {
+  const Home({List<_i10.PageRouteInfo>? children})
       : super(
           Home.name,
           path: '/home',
@@ -182,8 +205,8 @@ class Home extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.Intro]
-class Intro extends _i9.PageRouteInfo<void> {
+/// [_i6.Intro]
+class Intro extends _i10.PageRouteInfo<void> {
   const Intro()
       : super(
           Intro.name,
@@ -194,8 +217,8 @@ class Intro extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.Surveys]
-class Surveys extends _i9.PageRouteInfo<void> {
+/// [_i7.Surveys]
+class Surveys extends _i10.PageRouteInfo<void> {
   const Surveys()
       : super(
           Surveys.name,
@@ -206,8 +229,8 @@ class Surveys extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.History]
-class History extends _i9.PageRouteInfo<void> {
+/// [_i8.History]
+class History extends _i10.PageRouteInfo<void> {
   const History()
       : super(
           History.name,
@@ -218,8 +241,8 @@ class History extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.Settings]
-class Settings extends _i9.PageRouteInfo<void> {
+/// [_i9.Settings]
+class Settings extends _i10.PageRouteInfo<void> {
   const Settings()
       : super(
           Settings.name,
