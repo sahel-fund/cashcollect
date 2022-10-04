@@ -1,6 +1,7 @@
 import 'package:awesome_card/awesome_card.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
+import 'package:cashcollect/src/extensions/context.dart';
 import 'package:cashcollect/src/models/user_model.dart';
 import 'package:cashcollect/src/riverpods/auth_riverpods.dart';
 import 'package:cashcollect/src/services/hive/userbox.dart';
@@ -17,41 +18,11 @@ class Intro extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final UserModel? user =
+        UserBox.getUser(ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
     return Scaffold(
       key: _key,
-      drawer: Builder(
-        builder: (context) {
-          final UserModel? user = UserBox.getUser(
-              ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
-          return Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  decoration: const BoxDecoration(
-                    color: Palette.primary,
-                  ),
-                  child: Text(user!.names),
-                ),
-                ListTile(
-                  title: Text(user.profession),
-                  onTap: () {
-                    // Update the state of the app.
-                    // ...
-                  },
-                ),
-                ListTile(
-                  title: Text(user.email),
-                  onTap: () {
-                    // Update the state of the app.
-                    // ...
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+      drawer: CustomDrawer(ref: ref),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Center(
@@ -75,14 +46,15 @@ class Intro extends ConsumerWidget {
                             },
                             child: const CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  "https://www.gettyimages.fr/detail/photo/single-mother-playing-with-young-sons-in-front-image-libre-de-droits/1182075825"),
+                                "https://images.pexels.com/photos/56866/garden-rose-red-pink-56866.jpeg?cs=srgb&dl=pexels-pixabay-56866.jpg&fm=jpg",
+                              ),
                             ),
                           ),
                           const SizedBox(
                             width: 8,
                           ),
                           Text(
-                            "Hi Alpha! welcome back",
+                            "Hi ${user?.names}! welcome back",
                             style: TextStyles.designText(
                                 bold: false, color: Palette.primary, size: 12),
                           ),
@@ -182,6 +154,71 @@ class Intro extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+class CustomDrawer extends StatelessWidget {
+  final WidgetRef ref;
+  const CustomDrawer({
+    Key? key,
+    required this.ref,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        final UserModel? user = UserBox.getUser(
+            ref.read(AuthRiverpods.currentUserRiverpod)?.uid ?? "");
+        return Container(
+          width: context.screenWidth * .75,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Palette.primary, Palette.lightGrey],
+            ),
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.elliptical(context.screenWidth * .95, 100),
+              topRight: Radius.elliptical(context.screenWidth * .95, 100),
+            ),
+          ),
+          child: Center(
+            child: Column(
+              children: [
+                Text(
+                  user!.names,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class DrawerPainter extends CustomPainter {
+  @override
+  paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    paint.color = Palette.primary;
+    paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 2;
+
+    final path = Path();
+    path
+      ..moveTo(0, 0)
+      ..lineTo(100, 100)
+      ..lineTo(0, size.width * .45)
+      ..lineTo(size.width * .45, size.height);
+
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 
