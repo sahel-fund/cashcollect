@@ -1,15 +1,16 @@
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/extensions/autorouter.dart';
+import 'package:cashcollect/src/models/survey_model.dart';
+import 'package:cashcollect/src/models/survey_question.dart';
 import 'package:cashcollect/src/widgets/box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:cashcollect/src/router/router.gr.dart' as router;
 //import router
 
 final GlobalKey<ScaffoldState> _key = GlobalKey();
-final colorRiverpod = StateProvider(
-  (ref) => Palette.darkGrey.withOpacity(.3),
-);
 
 class Surveys extends ConsumerWidget {
   const Surveys({Key? key}) : super(key: key);
@@ -28,7 +29,9 @@ class Surveys extends ConsumerWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    context.autorouter.pushNamed('/survey-intro');
+                    context.autorouter.push(
+                      router.SurveyIntro(survey: surveys.first),
+                    );
                   },
                   child: const Box(
                     title: "Elections",
@@ -56,13 +59,18 @@ class Surveys extends ConsumerWidget {
 }
 
 class SurveyQuestionView extends ConsumerWidget {
+  final SurveyQuestion question;
+  final int questionIndex;
+  final int questionsLength;
   const SurveyQuestionView({
+    required this.questionIndex,
+    required this.questionsLength,
+    required this.question,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final color = ref.watch(colorRiverpod.state).state;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0) +
@@ -70,7 +78,7 @@ class SurveyQuestionView extends ConsumerWidget {
         child: Column(
           children: [
             LinearProgressIndicator(
-              value: 0.2,
+              value: questionIndex / questionsLength,
               backgroundColor: Palette.darkGrey.withOpacity(.3),
               valueColor: const AlwaysStoppedAnimation<Color>(Palette.primary),
             ),
@@ -79,7 +87,7 @@ class SurveyQuestionView extends ConsumerWidget {
               children: [
                 const Text(""),
                 Text(
-                  "Question 2 of 12",
+                  "Question $questionIndex of $questionsLength",
                   style: TextStyles.designText(
                       bold: true, color: Palette.darkGrey, size: 18),
                 ),
@@ -91,7 +99,7 @@ class SurveyQuestionView extends ConsumerWidget {
               height: 8,
             ),
             Text(
-              "What is the common age range affected by COVID-19 in your local community?",
+              question.question,
               style: TextStyles.designText(
                   bold: true, color: Palette.darkGrey, size: 18),
             ),
@@ -111,49 +119,73 @@ class SurveyQuestionView extends ConsumerWidget {
             const SizedBox(
               height: 8,
             ),
-            for (int i = 1; i <= 4; i++)
-              GestureDetector(
-                onTap: () {
-                  ref.read(colorRiverpod.state).state =
-                      color == Palette.tertiary
-                          ? Palette.darkGrey.withOpacity(.3)
-                          : Palette.tertiary;
-                  controller.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeIn);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: Container(
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: color, borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 8.0),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              "https://images.pexels.com/photos/56866/garden-rose-red-pink-56866.jpeg?cs=srgb&dl=pexels-pixabay-56866.jpg&fm=jpg",
-                              height: 65,
-                              width: 65,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            "18-25",
-                            style: TextStyles.designText(
-                                bold: true, color: Palette.darkGrey, size: 18),
-                          ),
-                        ],
-                      ),
+            ...question.options.map((option) {
+              final i = question.options.indexOf(option);
+              return Questiontile(ref: ref, option: question.options[i]);
+            }).toList(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Questiontile extends StatelessWidget {
+  final WidgetRef ref;
+  final Option option;
+  const Questiontile({
+    Key? key,
+    required this.ref,
+    required this.option,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    ValueNotifier<Color> color = ValueNotifier<Color>(
+      Palette.darkGrey.withOpacity(.1),
+    );
+    return ValueListenableBuilder(
+      valueListenable: color,
+      builder: (context, color, child) => GestureDetector(
+        onTap: () {
+          color = Palette.success;
+
+          Future.delayed(const Duration(milliseconds: 500), () {
+            controller.nextPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+            );
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: Container(
+            height: 70,
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: Image.network(
+                      option.image,
+                      height: 65,
+                      width: 65,
                     ),
                   ),
-                ),
-              )
-          ],
+                  const SizedBox(width: 8),
+                  Text(
+                    option.option,
+                    style: TextStyles.designText(
+                        bold: true, color: Palette.darkGrey, size: 18),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -163,7 +195,8 @@ class SurveyQuestionView extends ConsumerWidget {
 final controller = PageController(initialPage: 0);
 
 class SurveyQuestions extends ConsumerStatefulWidget {
-  const SurveyQuestions({Key? key}) : super(key: key);
+  final List<SurveyQuestion> questions;
+  const SurveyQuestions({Key? key, required this.questions}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -178,9 +211,13 @@ class _SurveyQuestionsState extends ConsumerState<SurveyQuestions> {
       onPageChanged: (index) {},
       pageSnapping: true,
       restorationId: 'survey_questions',
-      itemCount: 12,
+      itemCount: widget.questions.length,
       itemBuilder: (context, index) {
-        return const SurveyQuestionView();
+        return SurveyQuestionView(
+          question: widget.questions[index],
+          questionIndex: index + 1,
+          questionsLength: widget.questions.length,
+        );
       },
     );
   }
