@@ -1,13 +1,14 @@
-
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/config/text_styles.dart';
 import 'package:cashcollect/src/extensions/autorouter.dart';
+import 'package:cashcollect/src/models/survey_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cashcollect/src/router/router.gr.dart' as router;
 
 class SurveyIntro extends ConsumerWidget {
-  const SurveyIntro({Key? key}) : super(key: key);
+  final SurveyModel survey;
+  const SurveyIntro({Key? key, required this.survey}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,10 +49,15 @@ class SurveyIntro extends ConsumerWidget {
             ),
             Center(
               child: Text(
-                '2025 Presidential Elections in Cameroon',
+                survey.title,
                 style: TextStyles.designText(
                     color: Palette.secondary, size: 22, bold: true),
               ),
+            ),
+            Text(
+              survey.description,
+              style: TextStyles.designText(
+                  color: Palette.secondary, size: 10, bold: false),
             ),
             const SizedBox(
               height: 4,
@@ -88,7 +94,32 @@ class SurveyIntro extends ConsumerWidget {
               child: Center(
                 child: TextButton(
                   onPressed: () {
-                    context.autorouter.push(const router.SurveyQuestions());
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: const Text(
+                            "Once you start the survey, you can't go back until you finish it. Are you sure you want to proceed?"),
+                        title: const Text("Survey completion"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              context.autorouter.push(
+                                router.SurveyQuestions(
+                                  questions: survey.questions,
+                                ),
+                              );
+                            },
+                            child: const Text("Okay"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Exit"),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: Text(
                     "Let's go in",
