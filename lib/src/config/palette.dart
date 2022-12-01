@@ -1,4 +1,4 @@
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 
 class Palette {
   static const Color primary = Color(0xFF8A80B5);
@@ -7,6 +7,7 @@ class Palette {
   static const Color quaternary = Color(0xFFFFA68B);
   static const Color quinary = Color(0xFFFFCC70);
   static const Color senary = Color(0xFFF9F871);
+  static ValueNotifier<Color> pr = ValueNotifier(const Color(0xFF16213E));
   static const Color backgroundDark = Color(0xFF16213E);
   // GENERIC PALETTE
   static const Color dark = Color(0xFF000000);
