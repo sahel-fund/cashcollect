@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cashcollect/src/config/palette.dart';
 import 'package:cashcollect/src/router/router.gr.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
